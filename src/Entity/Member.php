@@ -53,6 +53,11 @@ class Member
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Rank;
+
     public function __construct()
     {
         $this->figures = new ArrayCollection();
@@ -182,6 +187,18 @@ class Member
                 $comment->setAuthorid(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRank(): ?int
+    {
+        return $this->Rank;
+    }
+
+    public function setRank(int $Rank): self
+    {
+        $this->Rank = $Rank;
 
         return $this;
     }
