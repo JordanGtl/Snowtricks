@@ -1,0 +1,13 @@
+/* All */
+html{height:100%;}
+body{height:100%;font-size:14px;background:#eee;}
+
+/* Navigation */
+.navbar{background-color: #363636 !important;padding:0 20px;}
+.nav-link, .navbar-brand{color:#fff;}
+.nav-item:hover{background:#222222;}
+.nav-item{height: 60px;line-height: 43px;}
+.logo
+{
+    background:url('/images/title.png');background-size: 100% 100%;display: block;width: 160px;height: 40px;
+}
