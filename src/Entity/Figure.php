@@ -29,7 +29,7 @@ class Figure
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Group", inversedBy="figures")
+     * @ORM\ManyToOne(targetEntity="App\Entity\FigureGroup", inversedBy="figures")
      * @ORM\JoinColumn(nullable=false)
      */
     private $groupid;
@@ -79,12 +79,12 @@ class Figure
         return $this;
     }
 
-    public function getGroupid(): ?Group
+    public function getGroupid(): ?FigureGroup
     {
         return $this->groupid;
     }
 
-    public function setGroupid(?Group $groupid): self
+    public function setGroupid(?FigureGroup $groupid): self
     {
         $this->groupid = $groupid;
 
