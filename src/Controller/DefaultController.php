@@ -15,9 +15,9 @@ class DefaultController extends AbstractController
     {
         $repository = $em->getRepository(Figure::class);
 
-        $figures = $repository->findAll();
+        $figures = $repository->createQueryBuilder('n')->setMaxResults(6)->getQuery()->getResult();;
 
-        return $this->render('default/home.html.twig', ['figures' => $figures]));
+        return $this->render('default/home.html.twig', ['figures' => $figures]);
     }
 
     

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "deaeade325e2d1f0e022f4ada460248b",
+    "content-hash": "84534e8a912942e83dd75fe70523093f",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -3328,16 +3328,16 @@
         },
         {
             "name": "symfony/security",
-            "version": "v4.1.1",
+            "version": "v4.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security.git",
-                "reference": "fa46e38ff4dea2d3949630efd33ed73e2ac0850a"
+                "reference": "545f995dd6ae969f17d9b631bf8e621fb89f25b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security/zipball/fa46e38ff4dea2d3949630efd33ed73e2ac0850a",
-                "reference": "fa46e38ff4dea2d3949630efd33ed73e2ac0850a",
+                "url": "https://api.github.com/repos/symfony/security/zipball/545f995dd6ae969f17d9b631bf8e621fb89f25b9",
+                "reference": "545f995dd6ae969f17d9b631bf8e621fb89f25b9",
                 "shasum": ""
             },
             "require": {
@@ -3401,7 +3401,7 @@
             ],
             "description": "Symfony Security Component",
             "homepage": "https://symfony.com",
-            "time": "2018-06-22T08:59:39+00:00"
+            "time": "2018-07-16T14:05:40+00:00"
         },
         {
             "name": "symfony/security-bundle",

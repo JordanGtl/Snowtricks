@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Figure;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -9,8 +11,12 @@ class FigureController extends AbstractController
     /**
      * @Route("/Figures", name="app_figures")
      */
-    public function showfigureslist()
+    public function showfigureslist(EntityManagerInterface $em)
     {
-        return $this->render('figure/list.html.twig');
+        $repository = $em->getRepository(Figure::class);
+
+        $figures = $repository->findAll();
+
+        return $this->render('figure/list.html.twig', ['figures' => $figures]);
     }
 }
