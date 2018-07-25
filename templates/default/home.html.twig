@@ -8,5 +8,17 @@
 </div>
 
 <div class="row FiguresList" id="figures" style="min-height:500px;">
+    {% for figure in figures %}
+        <div class="col-lg-2 p-4">
+            <div class="card">
+                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{ figure.name }}</h5>
+                    <small>{{ figure.groupid.name }}</small>
+                    <p class="card-text">{{ figure.description }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
