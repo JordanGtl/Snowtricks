@@ -45,9 +45,21 @@ class Figure
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FigurePicture", mappedBy="IdFigure")
+     */
+    private $figurePictures;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FigureVideo", mappedBy="IdFigure")
+     */
+    private $figureVideos;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->figurePictures = new ArrayCollection();
+        $this->figureVideos = new ArrayCollection();
     }
 
     public function getId()
@@ -128,6 +140,68 @@ class Figure
             // set the owning side to null (unless already changed)
             if ($comment->getFigureid() === $this) {
                 $comment->setFigureid(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FigurePicture[]
+     */
+    public function getFigurePictures(): Collection
+    {
+        return $this->figurePictures;
+    }
+
+    public function addFigurePicture(FigurePicture $figurePicture): self
+    {
+        if (!$this->figurePictures->contains($figurePicture)) {
+            $this->figurePictures[] = $figurePicture;
+            $figurePicture->setIdFigure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFigurePicture(FigurePicture $figurePicture): self
+    {
+        if ($this->figurePictures->contains($figurePicture)) {
+            $this->figurePictures->removeElement($figurePicture);
+            // set the owning side to null (unless already changed)
+            if ($figurePicture->getIdFigure() === $this) {
+                $figurePicture->setIdFigure(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FigureVideo[]
+     */
+    public function getFigureVideos(): Collection
+    {
+        return $this->figureVideos;
+    }
+
+    public function addFigureVideo(FigureVideo $figureVideo): self
+    {
+        if (!$this->figureVideos->contains($figureVideo)) {
+            $this->figureVideos[] = $figureVideo;
+            $figureVideo->setIdFigure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFigureVideo(FigureVideo $figureVideo): self
+    {
+        if ($this->figureVideos->contains($figureVideo)) {
+            $this->figureVideos->removeElement($figureVideo);
+            // set the owning side to null (unless already changed)
+            if ($figureVideo->getIdFigure() === $this) {
+                $figureVideo->setIdFigure(null);
             }
         }
 
