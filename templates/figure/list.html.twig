@@ -13,13 +13,15 @@
                             <div class="col-8">
                                 <h5 class="card-title">{{ figure.name }}</h5>
                                 <small>{{ figure.groupid.name }}</small>
-                                <p class="card-text">{{ figure.description }}</p>
                             </div>
                             <div class="col-4">
                                 {% if is_granted('ROLE_USER') %}
                                 <i class="fa fa-pencil"></i>
                                 <i class="fa fa-trash"></i>
                                 {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <p class="card-text">{{ figure.description }}</p>
                             </div>
                         </div>
                     </div>

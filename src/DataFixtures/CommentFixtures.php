@@ -12,12 +12,12 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Comment::class, 20, function(Comment $comment, $count)
+        $this->createMany(Comment::class, 30, function(Comment $comment, $count)
         {
             $faker = Faker\Factory::create('fr_FR');
 
             $comment->setAuthorid($this->getReference('App\Entity\Member_'.rand(0, 9)));
-            $comment->setFigureid($this->getReference('App\Entity\Figure_'.rand(0, 7)));
+            $comment->setFigureid($this->getReference('App\Entity\Trick_'.rand(0, 7)));
             $comment->setUpdatedate($faker->dateTimeBetween('-100 days', 'now'));
             $comment->setContent($faker->realText(200, 2));
         });
@@ -28,9 +28,9 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
     public function getDependencies()
     {
         return array(
-            FigureGroupFixtures::class,
+            TrickGroupFixtures::class,
             MemberFixtures::class,
-            FigureFixtures::class,
+            TrickFixtures::class,
         );
     }
 }

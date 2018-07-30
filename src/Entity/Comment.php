@@ -17,7 +17,7 @@ class Comment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Figure", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Trick", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $figureid;
@@ -43,12 +43,12 @@ class Comment
         return $this->id;
     }
 
-    public function getFigureid(): ?Figure
+    public function getFigureid(): ?Trick
     {
         return $this->figureid;
     }
 
-    public function setFigureid(?Figure $figureid): self
+    public function setFigureid(?Trick $figureid): self
     {
         $this->figureid = $figureid;
 

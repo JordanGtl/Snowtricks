@@ -25,7 +25,6 @@ class MemberFixtures extends BaseFixtures
             $member->setEmail('member'.$count.'@member.fr');
             $member->setPasswordToken('');
             $member->setValidationtoken('');
-
             $member->setPassword($this->encoder->encodePassword($member, $member->getPlainPassword()));
         });
 
@@ -38,7 +37,6 @@ class MemberFixtures extends BaseFixtures
         $product->setPasswordToken('');
         $product->setValidationtoken('');
         $product->setRank(array('ROLE_ADMIN'));
-
         $product->setPassword($this->encoder->encodePassword($product, $product->getPlainPassword()));
 
         $manager->persist($product);

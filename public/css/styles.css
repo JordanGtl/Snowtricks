@@ -24,3 +24,15 @@ footer{background:#2b2b2b;color:#fff;padding:20px;}
 /* Content */
 .FiguresList{max-width: 100%;margin: 0;background: #272727;}
 .card{border-radius: 0; border: 0;}
+.block{background:#fff;}
+
+/* Figures */
+.FigureIcon > a > i{font-size:20px;margin-right:10px;color:#575757;}
+.FigureIcon > a > i:hover{font-size:20px;margin-right:10px;color:#000;}
+.FigureImg{height: 100%;width: 100%;display:flex;align-items: center;justify-content: center;}
+.FigureImg > .FigureName{color: #fff;font-size: 70px;text-shadow:1px 1px 2px black;font-family: Arial;position:absolute;}
+.FiguresMedia{max-width: 100%;margin: 0;background: #fff;}
+.FigureUpdateBox{position: absolute;top: 5px;right: 15px;font-size: 20px;color:#fff;}
+.FigureUpdateBox > a{color:#eee;}
+.FigureUpdateBox > a:hover{color:#fff;}
+.LoadMoreComment{display:inline-block;background:#575757;color:#fff;padding:10px;}

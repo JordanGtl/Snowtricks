@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Snowtrick | Figures{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+                <div class="col-lg-12 mb-0 mt-4">
+                    <div class="card">
+                        <div class="FigureImg">
+                            <div class="FigureUpdateBox">
+                                {% if is_granted('ROLE_USER') %}
+                                    <a href="#"><i class="fa fa-pencil"></i></a>
+                                    <a href="#"><i class="fa fa-trash"></i></a>
+                                {% endif %}</div>
+                            <div class="FigureName">{{ figure.name }}</div>
+                            <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                        </div>
+
+                    </div>
+                </div>
+            <div class="col-12">
+                <div class="row FiguresMedia m-0 pt-4">
+                        <div class="col-lg-2">
+                            <div class="card">
+                                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="card">
+                                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="card">
+                                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="card">
+                                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="card">
+                                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="card">
+                                <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                                <div class="card-body"></div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="block pl-4 pr-4 text-center row m-0">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">{{ figure.description }}</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="block pl-4 pr-4 align-items-center justify-content-center row m-0 pt-2 pb-2">
+                   <div class="col-lg-8 row align-middle align-items-center justify-content-center">
+                        <div class="p-2 mr-2" style="background:#575757;color:#fff;border-radius:5px;">Groupe : {{ figure.groupid.name }}</div>
+                        <div class="p-2 mr-2" style="background:#575757;color:#fff;border-radius:5px;">Création : {{ figure.publishedAt|date("m/d/Y H:i") }}</div>
+                        <div class="p-2 mr-2" style="background:#575757;color:#fff;border-radius:5px;">Modification : {{ figure.updatedDate|date("d/m/Y H:i") }}</div>
+                    </div>
+                </div>
+            </div>
+            {% if is_granted('ROLE_USER') %}
+            <div class="col-12">
+                <div class="block pl-4 pr-4 align-items-center justify-content-center row m-0 pt-2 pb-2">
+                    {% include 'form/comment.html.twig' %}
+                </div>
+            </div>
+            {% endif %}
+            <div class="col-12">
+                <div class="block pl-4 pr-4 align-items-center justify-content-center row m-0 pt-2 pb-2 CommentBox">
+                {% for comment in comments %}
+                    <div class="mb-2 CommentData w-100">
+                        <b>Ecrit par <span class="Author">{{ comment.authorid.username }}</span>, le <span class="Date">{{ comment.updatedate|date('d/m/Y') }}</span></b><br />
+                        <span class="Content">{{  comment.content }}</span>
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="block p-2 text-center">
+                    <a href="#" class="LoadMoreComment" data-id="{{ figure.id }}" data-index="{{ commpentbaseindex }}" data-baseindex="{{ commpentbaseindex }}">Charger plus</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

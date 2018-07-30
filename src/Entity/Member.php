@@ -58,7 +58,7 @@ class Member implements UserInterface
     private $passwordtoken;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Figure", mappedBy="authorid")
+     * @ORM\OneToMany(targetEntity="Trick", mappedBy="authorid")
      */
     private $figures;
 
@@ -156,14 +156,14 @@ class Member implements UserInterface
     }
 
     /**
-     * @return Collection|Figure[]
+     * @return Collection|Trick[]
      */
     public function getFigures(): Collection
     {
         return $this->figures;
     }
 
-    public function addFigure(Figure $figure): self
+    public function addFigure(Trick $figure): self
     {
         if (!$this->figures->contains($figure)) {
             $this->figures[] = $figure;
@@ -173,7 +173,7 @@ class Member implements UserInterface
         return $this;
     }
 
-    public function removeFigure(Figure $figure): self
+    public function removeFigure(Trick $figure): self
     {
         if ($this->figures->contains($figure)) {
             $this->figures->removeElement($figure);
