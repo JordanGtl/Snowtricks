@@ -10,6 +10,12 @@
         {% endblock %}
     </head>
     <body>
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         <nav class="navbar navbar-expand-md navbar-dark bg-primary">
             <a class="navbar-brand abs logo" href="/index.php"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">

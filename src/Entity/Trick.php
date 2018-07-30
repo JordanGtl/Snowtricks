@@ -29,31 +29,28 @@ class Trick
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TrickGroup", inversedBy="figures")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="TrickGroup")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="groupid_id", referencedColumnName="id")
+     * })
      */
     private $groupid;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Member", inversedBy="figures")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Member", inversedBy="tricks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $authorid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="figureid")
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="trickid")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="TrickPicture", mappedBy="IdFigure")
+     * @ORM\OneToMany(targetEntity="TrickMedia", mappedBy="IdTrick")
      */
-    private $figurePictures;
-
-    /**
-     * @ORM\OneToMany(targetEntity="TrickVideo", mappedBy="IdFigure")
-     */
-    private $figureVideos;
+    private $trickMedia;
 
     /**
      * @ORM\Column(type="datetime")
@@ -68,8 +65,7 @@ class Trick
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->figurePictures = new ArrayCollection();
-        $this->figureVideos = new ArrayCollection();
+        $this->trickMedia = new ArrayCollection();
     }
 
     public function getId()
@@ -137,7 +133,7 @@ class Trick
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setFigureid($this);
+            $comment->setTrickid($this);
         }
 
         return $this;
@@ -148,8 +144,8 @@ class Trick
         if ($this->comments->contains($comment)) {
             $this->comments->removeElement($comment);
             // set the owning side to null (unless already changed)
-            if ($comment->getFigureid() === $this) {
-                $comment->setFigureid(null);
+            if ($comment->getTrickid() === $this) {
+                $comment->setTrickid(null);
             }
         }
 
@@ -157,61 +153,30 @@ class Trick
     }
 
     /**
-     * @return Collection|TrickPicture[]
+     * @return Collection|TrickMedia[]
      */
-    public function getFigurePictures(): Collection
+    public function getTrickMedia(): Collection
     {
-        return $this->figurePictures;
+        return $this->trickMedia;
     }
 
-    public function addFigurePicture(TrickPicture $figurePicture): self
+    public function addTrickMedia(TrickMedia $trickMedia): self
     {
-        if (!$this->figurePictures->contains($figurePicture)) {
-            $this->figurePictures[] = $figurePicture;
-            $figurePicture->setIdFigure($this);
+        if (!$this->trickMedia->contains($trickMedia)) {
+            $this->trickMedia[] = $trickMedia;
+            $trickMedia->setIdFigure($this);
         }
 
         return $this;
     }
 
-    public function removeFigurePicture(TrickPicture $figurePicture): self
+    public function removeTrickMedia(TrickMedia $trickMedia): self
     {
-        if ($this->figurePictures->contains($figurePicture)) {
-            $this->figurePictures->removeElement($figurePicture);
+        if ($this->trickMedia->contains($trickMedia)) {
+            $this->trickMedia->removeElement($trickMedia);
             // set the owning side to null (unless already changed)
-            if ($figurePicture->getIdFigure() === $this) {
-                $figurePicture->setIdFigure(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|TrickVideo[]
-     */
-    public function getFigureVideos(): Collection
-    {
-        return $this->figureVideos;
-    }
-
-    public function addFigureVideo(TrickVideo $figureVideo): self
-    {
-        if (!$this->figureVideos->contains($figureVideo)) {
-            $this->figureVideos[] = $figureVideo;
-            $figureVideo->setIdFigure($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFigureVideo(TrickVideo $figureVideo): self
-    {
-        if ($this->figureVideos->contains($figureVideo)) {
-            $this->figureVideos->removeElement($figureVideo);
-            // set the owning side to null (unless already changed)
-            if ($figureVideo->getIdFigure() === $this) {
-                $figureVideo->setIdFigure(null);
+            if ($trickMedia->getIdFigure() === $this) {
+                $trickMedia->setIdFigure(null);
             }
         }
 

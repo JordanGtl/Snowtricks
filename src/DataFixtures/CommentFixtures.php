@@ -17,7 +17,7 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
             $faker = Faker\Factory::create('fr_FR');
 
             $comment->setAuthorid($this->getReference('App\Entity\Member_'.rand(0, 9)));
-            $comment->setFigureid($this->getReference('App\Entity\Trick_'.rand(0, 7)));
+            $comment->setTrickid($this->getReference('App\Entity\Trick_'.rand(0, 7)));
             $comment->setUpdatedate($faker->dateTimeBetween('-100 days', 'now'));
             $comment->setContent($faker->realText(200, 2));
         });

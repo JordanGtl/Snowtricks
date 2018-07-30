@@ -1,0 +1,6 @@
+{{ form_start(trickform, {'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'method': 'POST'}) }}
+{{ form_row(trickform.name) }}
+{{ form_row(trickform.description) }}
+{{ form_row(trickform.groupid) }}
+<button type="submit">Editer la figure</button>
+{{ form_end(trickform) }}

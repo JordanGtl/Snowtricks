@@ -19,8 +19,8 @@
                         </div>
                         <div class="col-4 FigureIcon text-right p-2">
                             {% if is_granted('ROLE_USER') %}
-                                <a href="#"><i class="fa fa-pencil"></i></a>
-                                <a href="#"><i class="fa fa-trash"></i></a>
+                                <a href="{{ path('app_figurepage_edit', {'slug' : figure.name}) }}"><i class="fa fa-pencil"></i></a>
+                                <a class="LinkDelTrick" href="{{ path('app_figurepage_trash', {'slug' : figure.name}) }}"><i class="fa fa-trash"></i></a>
                             {% endif %}
                         </div>
                     </div>

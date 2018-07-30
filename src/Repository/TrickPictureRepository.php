@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\TrickPicture;
+use App\Entity\TrickMedia;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method TrickPicture|null find($id, $lockMode = null, $lockVersion = null)
- * @method TrickPicture|null findOneBy(array $criteria, array $orderBy = null)
- * @method TrickPicture[]    findAll()
- * @method TrickPicture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TrickMedia|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TrickMedia|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TrickMedia[]    findAll()
+ * @method TrickMedia[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TrickPictureRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, TrickPicture::class);
+        parent::__construct($registry, TrickMedia::class);
     }
 
 //    /**

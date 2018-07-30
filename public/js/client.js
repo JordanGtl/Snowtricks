@@ -62,3 +62,12 @@ $( ".LoadMoreFigure" ).click(function(e) {
         parent.attr('data-index', newindex);
     });
 });
+
+$('.LinkDelTrick').click(function(e){
+    if(!confirm("êtes vous sur de vouloir supprimer la figure ainsi que tout les commentaires et médias associés ?"))
+        e.preventDefault();
+});
+
+$( document ).ready(function() {
+    $('.alert').delay(3000).fadeOut(5000);
+});

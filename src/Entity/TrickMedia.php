@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickPictureRepository")
  */
-class TrickPicture
+class TrickMedia
 {
     /**
      * @ORM\Id()
@@ -17,15 +17,20 @@ class TrickPicture
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Trick", inversedBy="figurePictures")
+     * @ORM\ManyToOne(targetEntity="Trick", inversedBy="trickMedia")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $IdFigure;
+    private $IdTrick;
 
     /**
      * @ORM\Column(type="text")
      */
     private $Link;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $type;
 
     public function getId()
     {
@@ -34,12 +39,12 @@ class TrickPicture
 
     public function getIdFigure(): ?Trick
     {
-        return $this->IdFigure;
+        return $this->IdTrick;
     }
 
-    public function setIdFigure(?Trick $IdFigure): self
+    public function setIdFigure(?Trick $IdTrick): self
     {
-        $this->IdFigure = $IdFigure;
+        $this->IdTrick = $IdTrick;
 
         return $this;
     }
@@ -52,6 +57,18 @@ class TrickPicture
     public function setLink(string $Link): self
     {
         $this->Link = $Link;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

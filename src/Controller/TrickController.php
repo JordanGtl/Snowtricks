@@ -4,12 +4,15 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
+use App\Form\TrickType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class FigureController extends AbstractController
+class TrickController extends AbstractController
 {
     /**
      * @Route("/Figures", name="app_figures")
@@ -31,20 +34,20 @@ class FigureController extends AbstractController
         $repository = $em->getRepository(Trick::class);
         $repositorycom = $em->getRepository(Comment::class);
 
-        $figure = $repository->findOneBy(['name' => $slug]);
+        $trick = $repository->findOneBy(['name' => $slug]);
         $form = $this->createForm(CommentType::class);
-        $comments = $repositorycom->findBy(['figureid' => $figure->getId()], array('updatedate' => 'DESC'), 2, 0);
 
-        if ($request->getMethod() == 'POST') {
+        $comments = ($trick != null) ? $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), 2, 0) : '';
 
+        if ($request->getMethod() == 'POST')
+        {
             $form->handleRequest($request);
-
 
             if ($form->isSubmitted() && $form->isValid()) {
 
                 $user = $this->getUser();
                 $com = $form->getData();
-                $com->setFigureid($figure);
+                $com->setFigureid($trick);
                 $com->setAuthorid($user);
                 $com->setUpdatedate(new \DateTime('@'.strtotime('now')));
 
@@ -54,11 +57,60 @@ class FigureController extends AbstractController
         }
 
         return $this->render('figure/detail.html.twig', [
-            'figure' => $figure,
+            'trick' => $trick,
             'commentform' => $form->createView(),
             'comments' => $comments,
-            'commpentbaseindex' => 2
+            'commpentbaseindex' => 2,
+            'editmode' => false
         ]);
+    }
+
+    /**
+     * @Route("/Figure/{slug}/edit", name="app_figurepage_edit")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function edit($slug, Request $request, EntityManagerInterface $em)
+    {
+        $repository = $em->getRepository(Trick::class);
+
+        $trick = $repository->findOneBy(['name' => $slug]);
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->flush();
+            $this->addFlash('notice','La figure à été éditée');
+
+            return $this->redirectToRoute('app_figurepage', ['slug' => $form->getViewData()->getName()]);
+        }
+
+
+
+        return $this->render('figure/edit.html.twig', [
+            'trick' => $trick,
+            'trickform' => $form->createView(),
+            'editmode' => true]);
+    }
+
+    /**
+     * @Route("/Figure/{slug}/trash", name="app_figurepage_trash")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function trash($slug, Request $request, EntityManagerInterface $em)
+    {
+        $repository = $em->getRepository(Trick::class);
+
+        $trick = $repository->findOneBy(['name' => $slug]);
+
+        if($trick != null) {
+            $em->remove($trick);
+            $em->flush();
+        }
+
+        $this->addFlash('notice','La figure à été supprimées');
+
+        return $this->redirectToRoute('homepage');
     }
 
     /**

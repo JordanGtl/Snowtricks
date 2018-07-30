@@ -36,3 +36,14 @@ footer{background:#2b2b2b;color:#fff;padding:20px;}
 .FigureUpdateBox > a{color:#eee;}
 .FigureUpdateBox > a:hover{color:#fff;}
 .LoadMoreComment{display:inline-block;background:#575757;color:#fff;padding:10px;}
+
+/* Flash Message */
+.alert{
+    background: #1374c3;
+    position: fixed;
+    margin: 1%;
+    display: block;
+    width: 98%;
+    color: #fff;
+    z-index: 999;
+}
