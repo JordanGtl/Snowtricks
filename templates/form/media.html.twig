@@ -1,0 +1,4 @@
+{{ form_start(mediaform, {'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'method': 'POST'}) }}
+{{ form_row(mediaform.Link) }}
+<button type="submit" class="btn btn-primary">Ajouter un media</button>
+{{ form_end(mediaform) }}

@@ -12,7 +12,7 @@
                     {% endif %}
                 {% endif %}</div>
             <div class="FigureName">{{ trick.name }}</div>
-            <img class="card-img-top" src="/images/bg.jpg" alt="Card image cap">
+            <img class="card-img-top" src="/uploads/{{ trick.CoverMedia.link }}" alt="Card image cap">
         </div>
 
     </div>
@@ -23,7 +23,7 @@
         <div class="col-lg-2 FigureBox">
             <div class="card">
                 {% if medias.type == 0 %}
-                <img class="card-img-top" src="{{ medias.link }}" alt="Card image cap">
+                <img class="card-img-top" src="/uploads/{{ medias.link }}" alt="Card image cap">
                 {% else %}
                     <iframe width="155" height="103" src="https://www.youtube.com/embed/{{ medias.link }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 {% endif %}
@@ -34,13 +34,14 @@
                         <a href="#" data-id="{{ medias.id }}" class="TrickEditBtn"><i class="fa fa-pencil"></i></a>
                         <a href="#" data-id="{{ medias.id }}" class="TrickTrashBtn"><i class="fa fa-trash"></i></a>
                         {% if medias.type == 0 %}
-                            <a href="#" data-id="{{ medias.id }}" class="TrickSetMasterPic"><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="#" data-id="{{ medias.id }}" data-figure="{{ trick.id }}" class="TrickSetMasterPic"><i class="fa fa-arrow-circle-up"></i></a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
             </div>
+
         </div>
         {% endfor %}
-
+        {% if editmode == true %}<div class="text-center col-lg-12 pt-4 pb-4"><a class="btn btn-success text-white" href="{{ path('app_trick_addmedia', {'slug' : trick.name}) }}">Ajouter un media</a></div>{% endif %}
     </div>
 </div>

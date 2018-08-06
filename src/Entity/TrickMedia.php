@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TrickPictureRepository")
@@ -23,7 +26,8 @@ class TrickMedia
     private $IdTrick;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", name="link")
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png","image/gif" })
      */
     private $Link;
 
@@ -31,6 +35,16 @@ class TrickMedia
      * @ORM\Column(type="integer")
      */
     private $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="CoverMedia")
+     */
+    private $tricks;
+
+    public function __construct()
+    {
+        $this->tricks = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -49,12 +63,12 @@ class TrickMedia
         return $this;
     }
 
-    public function getLink(): ?string
+    public function getLink()
     {
         return $this->Link;
     }
 
-    public function setLink(string $Link): self
+    public function setLink($Link): self
     {
         $this->Link = $Link;
 
@@ -69,6 +83,37 @@ class TrickMedia
     public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Trick[]
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTrick(Trick $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setCoverMedia($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->contains($trick)) {
+            $this->tricks->removeElement($trick);
+            // set the owning side to null (unless already changed)
+            if ($trick->getCoverMedia() === $this) {
+                $trick->setCoverMedia(null);
+            }
+        }
 
         return $this;
     }

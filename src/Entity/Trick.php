@@ -62,6 +62,12 @@ class Trick
      */
     private $UpdatedDate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\TrickMedia", inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $CoverMedia;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -203,6 +209,18 @@ class Trick
     public function setUpdatedDate(\DateTimeInterface $UpdatedDate): self
     {
         $this->UpdatedDate = $UpdatedDate;
+
+        return $this;
+    }
+
+    public function getCoverMedia(): ?TrickMedia
+    {
+        return $this->CoverMedia;
+    }
+
+    public function setCoverMedia(?TrickMedia $CoverMedia): self
+    {
+        $this->CoverMedia = $CoverMedia;
 
         return $this;
     }
