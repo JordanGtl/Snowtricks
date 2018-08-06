@@ -2,5 +2,6 @@
 {{ form_row(trickform.name) }}
 {{ form_row(trickform.description) }}
 {{ form_row(trickform.groupid) }}
-<button type="submit">Editer la figure</button>
+<button type="submit" class="btn btn-primary d-lg-inline">Editer la figure</button>
+<a href="{{ path('app_trick_trash', {'slug' : app.request.attributes.get('slug')}) }}" class="btn btn-danger d-lg-inline">Supprimer la figure</a>
 {{ form_end(trickform) }}

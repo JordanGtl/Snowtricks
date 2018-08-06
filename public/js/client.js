@@ -101,3 +101,20 @@ $('.TrickTrashBtn').click(function(){
 
     alert('supression du media : ' + id);
 });
+
+$('.TrickSetMasterPic').click(function(){
+    var id = $(this).attr('data-id');
+    var parent = $(this);
+
+   /* $.ajax({
+        url: "/MediaDel/" + id,
+        cache: false
+    })
+        .done(function( data ) {
+
+        });*/
+
+
+
+    alert('Choix de la nouvelle image de couverture : ' + id);
+});
