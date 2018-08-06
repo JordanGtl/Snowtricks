@@ -96,25 +96,30 @@ $('.TrickTrashBtn').click(function(){
                 parent.closest('.FigureBox').remove();
             }
         });
-
-
-
-    alert('supression du media : ' + id);
 });
 
 $('.TrickSetMasterPic').click(function(){
     var id = $(this).attr('data-id');
+    var trick = $(this).attr('data-trick');
+    var trickname = $(this).attr('data-trickname');
     var parent = $(this);
 
-   /* $.ajax({
-        url: "/MediaDel/" + id,
+    $.ajax({
+        url: "/MediaSetCover/" + trick + "/" + id,
         cache: false
     })
-        .done(function( data ) {
+        .done(function( data )
+        {
+            if(data.result == false)
+                alert('Erreur lors du choix de la photo de couverture');
+            else {
+                document.location.href = '/Trick/' + trickname + '/edit';
+            }
+        });
+});
 
-        });*/
-
-
-
-    alert('Choix de la nouvelle image de couverture : ' + id);
+$('.ShowMedia').click(function()
+{
+    $('.FiguresMedia').removeClass('d-none');
+    $(this).addClass('d-none');
 });

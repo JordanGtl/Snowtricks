@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Trick;
 use App\Entity\TrickMedia;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ class TrickMediaController extends AbstractController
      * @Route("/MediaDel/{index}", name="app_mediadelajax")
      * @Security("has_role('ROLE_USER')")
      */
-    public function ajaxcomment($index, EntityManagerInterface $em)
+    public function mediadel($index, EntityManagerInterface $em)
     {
         $repository = $em->getRepository(TrickMedia::class);
 
@@ -31,5 +32,29 @@ class TrickMediaController extends AbstractController
         $return = array('id' => $media->getId(), 'result' => $result);
 
         return $this->json($return);
+    }
+
+    /**
+     * @Route("/MediaSetCover/{trickid}/{index}", name="app_mediasetcover")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function mediasetcover($trickid, $index, EntityManagerInterface $em)
+    {
+        $Trickrepository = $em->getRepository(Trick::class);
+        $Mediarepository = $em->getRepository(TrickMedia::class);
+
+        $trick = $Trickrepository->findOneBy(['id' => $trickid]);
+        $media = $Mediarepository->findOneBy(['id' => $index]);
+
+        $result = false;
+
+        if($trick != null && $media != null)
+        {
+            $trick->setCoverMedia($media);
+            $em->flush();
+            $result = true;
+        }
+
+        return $this->json(array('result' => $result));
     }
 }

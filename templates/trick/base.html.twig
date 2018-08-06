@@ -18,9 +18,9 @@
     </div>
 </div>
 <div class="col-12">
-    <div class="row FiguresMedia m-0 pt-4">
+    <div class="row FiguresMedia m-0 pt-4  d-none d-lg-flex">
         {% for medias in trick.trickMedia %}
-        <div class="col-lg-2 FigureBox">
+        <div class="col-lg-2 FigureBox mb-3">
             <div class="card">
                 {% if medias.type == 0 %}
                 <img class="card-img-top" src="/uploads/{{ medias.link }}" alt="Card image cap">
@@ -34,7 +34,7 @@
                         <a href="#" data-id="{{ medias.id }}" class="TrickEditBtn"><i class="fa fa-pencil"></i></a>
                         <a href="#" data-id="{{ medias.id }}" class="TrickTrashBtn"><i class="fa fa-trash"></i></a>
                         {% if medias.type == 0 %}
-                            <a href="#" data-id="{{ medias.id }}" data-figure="{{ trick.id }}" class="TrickSetMasterPic"><i class="fa fa-arrow-circle-up"></i></a>
+                            <a href="#" data-id="{{ medias.id }}" data-trick="{{ trick.id }}" data-trickname="{{ trick.name }}" class="TrickSetMasterPic"><i class="fa fa-arrow-circle-up"></i></a>
                         {% endif %}
                     {% endif %}
                 {% endif %}
@@ -44,4 +44,5 @@
         {% endfor %}
         {% if editmode == true %}<div class="text-center col-lg-12 pt-4 pb-4"><a class="btn btn-success text-white" href="{{ path('app_trick_addmedia', {'slug' : trick.name}) }}">Ajouter un media</a></div>{% endif %}
     </div>
+    <div class="row FiguresMedia m-0 pt-4 d-block d-lg-none text-center"><a href="#" class="btn btn-success mb-3 ShowMedia">Voir les médias</a></div>
 </div>
