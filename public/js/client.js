@@ -6,7 +6,7 @@ $( ".LoadMoreComment" ).click(function(e) {
     var parent = $(this);
 
     $.ajax({
-        url: "/FigureCom/" + $(this).attr('data-id') + "/" + index,
+        url: "/TrickCom/" + $(this).attr('data-id') + "/" + index,
         cache: false
     })
         .done(function( data )
@@ -41,7 +41,7 @@ $( ".LoadMoreFigure" ).click(function(e) {
     var parent = $(this);
 
     $.ajax({
-        url: "/FigureLoad/" + index,
+        url: "/TrickLoad/" + index,
         cache: false
     })
     .done(function( data ) {
@@ -70,4 +70,34 @@ $('.LinkDelTrick').click(function(e){
 
 $( document ).ready(function() {
     $('.alert').delay(3000).fadeOut(5000);
+});
+
+$('.TrickEditBtn').click(function(){
+    var id = $(this).attr('data-id');
+
+    alert('edition du media : ' + id);
+});
+
+$('.TrickTrashBtn').click(function(){
+    var id = $(this).attr('data-id');
+    var parent = $(this);
+
+    $.ajax({
+        url: "/MediaDel/" + id,
+        cache: false
+    })
+        .done(function( data ) {
+            console.log(data);
+
+            if(data.result == false)
+                alert('supression erreur');
+            else
+            {
+                parent.closest('.FigureBox').remove();
+            }
+        });
+
+
+
+    alert('supression du media : ' + id);
 });

@@ -1,4 +1,4 @@
 {{ form_start(commentform, {'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'method': 'POST'}) }}
 {{ form_row(commentform.content) }}
-<button type="submit">Ajouter un commentaire</button>
+<button type="submit" class="btn btn-primary">Ajouter un commentaire</button>
 {{ form_end(commentform) }}

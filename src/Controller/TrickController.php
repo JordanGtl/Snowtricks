@@ -15,19 +15,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class TrickController extends AbstractController
 {
     /**
-     * @Route("/Figures", name="app_figures")
+     * @Route("/Tricks", name="app_tricks")
      */
     public function showfigureslist(EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Trick::class);
 
-        $figures = $repository->findAll();
+        $tricks = $repository->findAll();
 
-        return $this->render('figure/list.html.twig', ['figures' => $figures]);
+        return $this->render('trick/list.html.twig', ['tricks' => $tricks]);
     }
 
     /**
-     * @Route("/Figure/{slug}", name="app_figurepage")
+     * @Route("/Trick/{slug}", name="app_trick")
      */
     public function show($slug, Request $request, EntityManagerInterface $em)
     {
@@ -47,16 +47,18 @@ class TrickController extends AbstractController
 
                 $user = $this->getUser();
                 $com = $form->getData();
-                $com->setFigureid($trick);
+                $com->setTrickid($trick);
                 $com->setAuthorid($user);
                 $com->setUpdatedate(new \DateTime('@'.strtotime('now')));
 
                 $em->persist($com);
                 $em->flush();
+
+                return $this->redirectToRoute('app_trick', array('slug' => $slug));
             }
         }
 
-        return $this->render('figure/detail.html.twig', [
+        return $this->render('trick/detail.html.twig', [
             'trick' => $trick,
             'commentform' => $form->createView(),
             'comments' => $comments,
@@ -66,7 +68,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/Figure/{slug}/edit", name="app_figurepage_edit")
+     * @Route("/Trick/{slug}/edit", name="app_trick_edit")
      * @Security("has_role('ROLE_USER')")
      */
     public function edit($slug, Request $request, EntityManagerInterface $em)
@@ -82,19 +84,17 @@ class TrickController extends AbstractController
             $em->flush();
             $this->addFlash('notice','La figure à été éditée');
 
-            return $this->redirectToRoute('app_figurepage', ['slug' => $form->getViewData()->getName()]);
+            return $this->redirectToRoute('app_trick', ['slug' => $form->getViewData()->getName()]);
         }
 
-
-
-        return $this->render('figure/edit.html.twig', [
+        return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'trickform' => $form->createView(),
             'editmode' => true]);
     }
 
     /**
-     * @Route("/Figure/{slug}/trash", name="app_figurepage_trash")
+     * @Route("/Trick/{slug}/trash", name="app_trick_trash")
      * @Security("has_role('ROLE_USER')")
      */
     public function trash($slug, Request $request, EntityManagerInterface $em)
@@ -114,15 +114,15 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/FigureCom/{slug}/{index}", name="app_commentajax")
+     * @Route("/TrickCom/{slug}/{index}", name="app_commentajax")
      */
     public function ajaxcomment($slug, $index, EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Trick::class);
         $repositorycom = $em->getRepository(Comment::class);
 
-        $figure = $repository->findOneBy(['id' => $slug]);
-        $comments = $repositorycom->findBy(['figureid' => $figure->getId()], array('updatedate' => 'DESC'), 2, $index);
+        $trick = $repository->findOneBy(['id' => $slug]);
+        $comments = $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), 2, $index);
 
         $results = array();
 
@@ -135,19 +135,19 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/FigureLoad/{index}", name="app_figureajax")
+     * @Route("/TrickLoad/{index}", name="app_figureajax")
      */
     public function ajaxfigure($index, EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Trick::class);
 
-        $figures = $repository->createQueryBuilder('n')->setMaxResults(6)->setFirstResult($index)->getQuery()->getResult();
+        $tricks = $repository->createQueryBuilder('n')->setMaxResults(6)->setFirstResult($index)->getQuery()->getResult();
 
         $results = array();
 
-        foreach($figures as $figure)
+        foreach($tricks as $trick)
         {
-            $results[] = array('id' => $figure->getId(), 'name' => $figure->getName(),  'author' => $figure->getAuthorid()->getUsername(), 'date' => $figure->getPublishedAt()->format('d/m/Y h:i'));
+            $results[] = array('id' => $trick->getId(), 'name' => $trick->getName(),  'author' => $trick->getAuthorid()->getUsername(), 'date' => $trick->getPublishedAt()->format('d/m/Y h:i'));
         }
 
         return $this->json($results);

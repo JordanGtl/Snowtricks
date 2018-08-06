@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Snowtrick | Figures{% endblock %}
+
+{% block body %}
+    <div class="row FiguresList" id="figures" style="min-height:500px;">
+        {% for trick in tricks %}
+            <div class="col-lg-2 p-4">
+                <div class="card">
+                    <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">{{ trick.name }}</h5>
+                                <small>{{ trick.groupid.name }}</small>
+                            </div>
+                            <div class="col-4">
+                                {% if is_granted('ROLE_USER') %}
+                                <i class="fa fa-pencil"></i>
+                                <i class="fa fa-trash"></i>
+                                {% endif %}
+                            </div>
+                            <div class="col-12">
+                                <p class="card-text">{{ trick.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

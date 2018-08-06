@@ -10,14 +10,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class MemberController extends AbstractController
 {
     /**
-     * @Route("/Register", name="app_register")
+     * @Route("/register", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
+        $user = $this->getUser();
+
+        if($user != null)
+           return $this->redirectToRoute('homepage');
+
         // 1) build the form
         $user = new Member();
         $form = $this->createForm(MemberType::class, $user);
@@ -50,6 +56,11 @@ class MemberController extends AbstractController
      */
     public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
+        $user = $this->getUser();
+
+        if($user != null)
+            return $this->redirectToRoute('homepage');
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

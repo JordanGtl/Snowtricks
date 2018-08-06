@@ -1,0 +1,43 @@
+<div class="col-lg-12 mb-0 mt-4">
+    <div class="card">
+        <div class="FigureImg">
+            <div class="FigureUpdateBox">
+                {% if is_granted('ROLE_USER') %}
+                    {% if editmode == false %}
+                        <a href="{{ path('app_trick_edit', {'slug' : trick.name}) }}"><i class="fa fa-pencil"></i></a>
+                        <a class="LinkDelTrick" href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
+                    {% else %}
+                        <a href="#" onclick="alert('edit image couverture');"><i class="fa fa-pencil"></i></a>
+                        <a href="#" onclick="alert('del image couverture');"><i class="fa fa-trash"></i></a>
+                    {% endif %}
+                {% endif %}</div>
+            <div class="FigureName">{{ trick.name }}</div>
+            <img class="card-img-top" src="/images/bg.jpg" alt="Card image cap">
+        </div>
+
+    </div>
+</div>
+<div class="col-12">
+    <div class="row FiguresMedia m-0 pt-4">
+        {% for medias in trick.trickMedia %}
+        <div class="col-lg-2 FigureBox">
+            <div class="card">
+                {% if medias.type == 0 %}
+                <img class="card-img-top" src="{{ medias.link }}" alt="Card image cap">
+                {% else %}
+                    <iframe width="155" height="103" src="https://www.youtube.com/embed/{{ medias.link }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                {% endif %}
+            </div>
+            <div>
+                {% if is_granted('ROLE_USER') %}
+                    {% if editmode == true %}
+                        <a href="#" data-id="{{ medias.id }}" class="TrickEditBtn"><i class="fa fa-pencil"></i></a>
+                        <a href="#" data-id="{{ medias.id }}" class="TrickTrashBtn"><i class="fa fa-trash"></i></a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>

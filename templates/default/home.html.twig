@@ -15,12 +15,12 @@
                 <div class="card-body p-2">
                     <div class="row">
                         <div class="col-8 ">
-                            <h5 class="card-title p-2"><a href="{{ path('app_figurepage', {'slug' : figure.name}) }}" class="FigureLoadName">{{ figure.name }}</a></h5>
+                            <h5 class="card-title p-2"><a href="{{ path('app_trick', {'slug' : figure.name}) }}" class="FigureLoadName">{{ figure.name }}</a></h5>
                         </div>
                         <div class="col-4 FigureIcon text-right p-2">
                             {% if is_granted('ROLE_USER') %}
-                                <a href="{{ path('app_figurepage_edit', {'slug' : figure.name}) }}"><i class="fa fa-pencil"></i></a>
-                                <a class="LinkDelTrick" href="{{ path('app_figurepage_trash', {'slug' : figure.name}) }}"><i class="fa fa-trash"></i></a>
+                                <a href="{{ path('app_trick_edit', {'slug' : figure.name}) }}"><i class="fa fa-pencil"></i></a>
+                                <a class="LinkDelTrick" href="{{ path('app_trick_trash', {'slug' : figure.name}) }}"><i class="fa fa-trash"></i></a>
                             {% endif %}
                         </div>
                     </div>
