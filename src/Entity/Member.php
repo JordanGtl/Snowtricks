@@ -72,6 +72,11 @@ class Member implements UserInterface
      */
     private $Rank;
 
+    /**
+     * @ORM\Column(type="string", length=200, nullable=true)
+     */
+    private $Avatar;
+
     public function __construct()
     {
         $this->figures = new ArrayCollection();
@@ -267,5 +272,17 @@ class Member implements UserInterface
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->Avatar;
+    }
+
+    public function setAvatar(?string $Avatar): self
+    {
+        $this->Avatar = $Avatar;
+
+        return $this;
     }
 }

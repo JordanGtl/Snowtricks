@@ -6,6 +6,8 @@
 parameters:
     locale: 'fr'
     upload_directory: '../public/uploads'
+    comment_per_page: 10
+    trick_index_nbr: 6
 
 services:
     # default configuration for services in *this* file

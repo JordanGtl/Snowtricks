@@ -40,7 +40,7 @@ class TrickController extends AbstractController
         $trick = $repository->findOneBy(['name' => $slug]);
         $form = $this->createForm(CommentType::class);
 
-        $comments = ($trick != null) ? $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), 2, 0) : '';
+        $comments = ($trick != null) ? $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), $this->getParameter('comment_per_page'), 0) : '';
 
         if ($request->getMethod() == 'POST')
         {
@@ -65,7 +65,7 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'commentform' => $form->createView(),
             'comments' => $comments,
-            'commpentbaseindex' => 2,
+            'commpentbaseindex' => $this->getParameter('comment_per_page'),
             'editmode' => false
         ]);
     }
@@ -176,7 +176,7 @@ class TrickController extends AbstractController
         $repositorycom = $em->getRepository(Comment::class);
 
         $trick = $repository->findOneBy(['id' => $slug]);
-        $comments = $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), 2, $index);
+        $comments = $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), $this->getParameter('comment_per_page'), $index);
 
         $results = array();
 
