@@ -20,7 +20,7 @@
                    <div class="col-lg-8 row align-middle align-items-center justify-content-center">
                         <div class="p-2 mr-2 mb-2" style="background:#575757;color:#fff;border-radius:5px;">Groupe : {{ trick.groupid.name }}</div>
                         <div class="p-2 mr-2 mb-2" style="background:#575757;color:#fff;border-radius:5px;">Création : {{ trick.publishedAt|date("m/d/Y H:i") }}</div>
-                        <div class="p-2 mr-2 mb-2" style="background:#575757;color:#fff;border-radius:5px;">Modification : {{ trick.updatedDate|date("d/m/Y H:i") }}</div>
+                        {% if trick.updatedDate > trick.publishedAt %}<div class="p-2 mr-2 mb-2" style="background:#575757;color:#fff;border-radius:5px;">Modification : {{ trick.updatedDate|date("d/m/Y H:i") }}</div>{% endif %}
                     </div>
                 </div>
             </div>

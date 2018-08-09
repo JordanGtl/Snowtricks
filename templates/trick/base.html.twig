@@ -7,12 +7,10 @@
                         <a href="{{ path('app_trick_edit', {'slug' : trick.name}) }}"><i class="fa fa-pencil"></i></a>
                         <a class="LinkDelTrick" href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
                     {% else %}
-                        <a href="#" onclick="alert('edit image couverture');"><i class="fa fa-pencil"></i></a>
-                        <a href="#" onclick="alert('del image couverture');"><i class="fa fa-trash"></i></a>
                     {% endif %}
                 {% endif %}</div>
             <div class="FigureName">{{ trick.name }}</div>
-            <img class="card-img-top" src="/uploads/{{ trick.CoverMedia.link }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ trick.CoverMedia ? "/uploads/#{trick.CoverMedia.link}" : '/images/trickdefaultcover.jpg' }}" alt="Card image cap">
         </div>
 
     </div>
@@ -42,7 +40,7 @@
 
         </div>
         {% endfor %}
-        {% if editmode == true %}<div class="text-center col-lg-12 pt-4 pb-4"><a class="btn btn-success text-white" href="{{ path('app_trick_addmedia', {'slug' : trick.name}) }}">Ajouter un media</a></div>{% endif %}
+        {% if editmode == true %}<div class="text-center col-lg-12 pt-4 pb-4" style="background:#575757;"><a class="btn btn-success text-white" href="{{ path('app_trick_addmedia', {'slug' : trick.name}) }}">Ajouter un media</a></div>{% endif %}
     </div>
     <div class="row FiguresMedia m-0 pt-4 d-block d-lg-none text-center"><a href="#" class="btn btn-success mb-3 ShowMedia">Voir les médias</a></div>
 </div>

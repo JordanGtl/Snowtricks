@@ -66,7 +66,7 @@ class Trick
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TrickMedia", inversedBy="tricks")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $CoverMedia;
 

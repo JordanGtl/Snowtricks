@@ -135,6 +135,7 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $trick->setUpdatedDate(new \DateTime('now'));
             $em->flush();
             $this->addFlash('notice','La figure à été éditée');
 
@@ -142,6 +143,39 @@ class TrickController extends AbstractController
         }
 
         return $this->render('trick/edit.html.twig', [
+            'trick' => $trick,
+            'trickform' => $form->createView(),
+            'editmode' => true]);
+    }
+
+    /**
+     * @Route("/TrickNew", name="app_trick_new")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function add(Request $request, EntityManagerInterface $em)
+    {
+        //TODO : Créer la figure à l'ouverture de la page mais la masquer tant que le formulaire n'est pas compléter on peut ainsi envoyer des images lié à la figure
+        //TODO : Pour la photo de couverture prendre la première image quand existante
+
+        $trick = new Trick();
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $trick->setPublishedAt(new \DateTime('now'));
+            $trick->setUpdatedDate(new \DateTime('now'));
+            $trick->setAuthorid($this->getUser());
+            $trick->setCoverMedia(null);
+
+            $em->persist($trick);
+            $em->flush();
+            $this->addFlash('notice','La figure à été ajoutée');
+
+            return $this->redirectToRoute('app_trick', ['slug' => $form->getViewData()->getName()]);
+        }
+
+        return $this->render('trick/add.html.twig', [
             'trick' => $trick,
             'trickform' => $form->createView(),
             'editmode' => true]);
