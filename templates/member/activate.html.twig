@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Snowtrick | Activation de compte{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+        <div class="col-lg-12 text-center p-4">
+            <h1>Activation de compte</h1>
+            <div class="block p-3">
+                {{ message }}<br />
+                <a href="{{ path('app_login') }}">Continuer</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

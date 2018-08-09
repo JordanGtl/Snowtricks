@@ -63,7 +63,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     protected function getLoginUrl()
     {
-        return $this->router->generate('app_login_fail');
+        return $this->router->generate('app_login');
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)

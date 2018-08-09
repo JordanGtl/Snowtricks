@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Member;
 use App\Form\LoginType;
 use App\Form\MemberType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,14 +37,15 @@ class MemberController extends AbstractController
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            $user->setActive(false);
+            $user->setValidationtoken(md5(uniqid()));
+
+            // TODO : Envois du mail quand j'aurais une connexion internet ....
 
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
 
             return $this->redirectToRoute('app_login');
         }
@@ -76,11 +78,29 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/loginfail", name="app_login_fail")
+     * @Route("/Activate/{token}", name="app_account_active")
      */
-    public function loginfail(Request $request, AuthenticationUtils $authenticationUtils)
+    public function accountactive($token, EntityManagerInterface $em)
     {
-        return new Response('erreur dans les identifiants');
+        $repo = $em->getRepository(Member::class);
+        $user = $repo->findOneBy(['validationtoken' => $token]);
+
+        if($user == null)
+        {
+            return $this->render('member/activate.html.twig', array(
+                'message' => 'Aucun compte trouvé avec le token de validation'
+            ));
+        }
+        else
+        {
+            $user->setActive(true);
+            $user->setValidationtoken('');
+            $em->flush();
+
+            return $this->render('member/activate.html.twig', array(
+                'message' => 'Le compte à été activé, vous pouvez vous connecter'
+            ));
+        }
     }
 
     /**

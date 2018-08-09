@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields="email", message="L'adresse email est déjà utilisée")
  * @UniqueEntity(fields="username", message="Le nom de compte est déjà utilisé")
  */
-class Member implements UserInterface
+class Member implements AdvancedUserInterface
 {
     /**
      * @ORM\Id()
@@ -76,6 +77,11 @@ class Member implements UserInterface
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $Avatar;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
 
     public function __construct()
     {
@@ -257,6 +263,7 @@ class Member implements UserInterface
             $this->id,
             $this->username,
             $this->password,
+            $this->active,
             // see section on salt below
             // $this->salt,
         ));
@@ -269,6 +276,7 @@ class Member implements UserInterface
             $this->id,
             $this->username,
             $this->password,
+            $this->active,
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
@@ -284,5 +292,37 @@ class Member implements UserInterface
         $this->Avatar = $Avatar;
 
         return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+    }
+
+    public function isEnabled()
+    {
+        return $this->active;
     }
 }
