@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Entity\Member;
 use App\Form\LoginType;
 use App\Form\MemberType;
+use App\Form\PasswordChangeType;
+use App\Form\PasswordLostType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,5 +111,76 @@ class MemberController extends AbstractController
     public function logoutAction()
     {
         throw new \Exception('this should not be reached!');
+    }
+
+    /**
+     * @Route("/LostPassword", name="app_account_lostpassword")
+     */
+    public function lostpassword(Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(PasswordLostType::class);
+        $message = '';
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $repouser = $em->getRepository(Member::class);
+            $user = $repouser->findOneBy(['email' => $form->getViewData()['email']]);
+
+            if($user == null)
+                $message = 'Aucun utilisateur trouvé';
+            else
+            {
+                $message = 'Un email à été envoyé à l\'adresse mail saisie pour modifier votre mot de passe';
+                $user->setPasswordtoken(md5(uniqid()));
+                $em->flush();
+                // TODO Envoie du mail quand j'aurais internet ...
+            }
+        }
+
+        return $this->render('member/passwordlostform.html.twig', [
+            'form' => $form->createView(),
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * @Route("/PasswordChange/{token}", name="app_account_passwordchange")
+     */
+    public function passwordchange($token, Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $repouser = $em->getRepository(Member::class);
+        $user = $repouser->findOneBy(['passwordtoken' => $token]);
+        $message = '';
+        $form = null;
+        $status = false;
+
+        if($user == null)
+        {
+            $message = 'Une erreur est survenue, aucun utilisateur trouvé pour le token renseigné.';
+        }
+        else
+        {
+            $form = $this->createForm(PasswordChangeType::class);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $password = $passwordEncoder->encodePassword($user, $form->getViewData()['plainPassword']);
+                $user->setPassword($password);
+                $user->setPasswordtoken('');
+                $em->flush();
+
+                $form = null;
+                $status = true;
+                $message = 'Modification éffectué, vous pouvez vous connecter avec le nouveau mot de passe.';
+            }
+        }
+
+        return $this->render('member/passwordchange.html.twig', [
+            'message' => $message,
+            'status' => $status,
+            'form' => ($form == null) ? null : $form->createView(),
+        ]);
     }
 }

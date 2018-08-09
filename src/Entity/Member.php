@@ -26,7 +26,6 @@ class Member implements AdvancedUserInterface
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
-     * @Assert\NotBlank()
      */
     private $username;
 
@@ -36,14 +35,12 @@ class Member implements AdvancedUserInterface
     private $password;
 
     /**
-     * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\NotBlank()
      * @Assert\Email()
      */
     private $email;
