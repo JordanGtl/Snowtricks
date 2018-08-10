@@ -70,6 +70,11 @@ class Trick
      */
     private $CoverMedia;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -223,6 +228,18 @@ class Trick
     public function setCoverMedia(?TrickMedia $CoverMedia): self
     {
         $this->CoverMedia = $CoverMedia;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

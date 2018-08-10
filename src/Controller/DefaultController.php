@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
     {
         $repository = $em->getRepository(Trick::class);
 
-        $figures = $repository->createQueryBuilder('n')->setMaxResults($this->getParameter('trick_index_nbr'))->getQuery()->getResult();
+        $figures = $repository->findActive($this->getParameter('trick_index_nbr'));
 
         return $this->render('default/home.html.twig', ['figures' => $figures, 'figurebaseindex' => 6]);
     }

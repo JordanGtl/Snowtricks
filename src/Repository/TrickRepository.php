@@ -19,6 +19,17 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    public function findActive($limit)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.active = 1')
+            ->orderBy('f.id', 'ASC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Figure[] Returns an array of Figure objects
 //     */

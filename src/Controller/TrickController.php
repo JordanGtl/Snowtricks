@@ -87,7 +87,7 @@ class TrickController extends AbstractController
     public function addmedia($slug, Request $request, EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Trick::class);
-        $trick = $repository->findOneBy(['name' => $slug]);
+        $trick = $repository->findOneBy(['id' => $slug]);
 
         $trickmedia = new TrickMedia();
         $form = $this->createForm(TrickMediaType::class, $trickmedia);
@@ -112,7 +112,18 @@ class TrickController extends AbstractController
             $em->flush();
             $this->addFlash('notice','Le nouveau média à été ajoutée');
 
-            return $this->redirectToRoute('app_trick', ['slug' => $trick->getName()]);
+            if($trick->getName() == $this->getUser()->getUsername())
+            {
+                if($trick->getCoverMedia() == null)
+                {
+                    $trick->setCoverMedia($trickmedia);
+                    $em->flush();
+                }
+
+                return $this->redirectToRoute('app_trick_new');
+            }
+            else
+                return $this->redirectToRoute('app_trick', ['slug' => $trick->getName()]);
         }
 
         return $this->render('trick/addmedia.html.twig', [
@@ -157,7 +168,27 @@ class TrickController extends AbstractController
         //TODO : Créer la figure à l'ouverture de la page mais la masquer tant que le formulaire n'est pas compléter on peut ainsi envoyer des images lié à la figure
         //TODO : Pour la photo de couverture prendre la première image quand existante
 
-        $trick = new Trick();
+        $tricRepo = $em->getRepository(Trick::class);
+        $dbtrick = $tricRepo->findOneBy(['name' => $this->getUser()->getUsername()]);
+
+        if($dbtrick == null)
+        {
+            $trick = new Trick();
+            $trick->setPublishedAt(new \DateTime('now'));
+            $trick->setUpdatedDate(new \DateTime('now'));
+            $trick->setAuthorid($this->getUser());
+            $trick->setCoverMedia(null);
+            $trick->setActive(false);
+            $trick->setName($this->getUser()->getUsername());
+            $trick->setDescription('');
+
+            $em->persist($trick);
+            $em->flush();
+        }
+        else
+            $trick = $dbtrick;
+
+        $trick->setName('');
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -165,11 +196,9 @@ class TrickController extends AbstractController
         {
             $trick->setPublishedAt(new \DateTime('now'));
             $trick->setUpdatedDate(new \DateTime('now'));
-            $trick->setAuthorid($this->getUser());
-            $trick->setCoverMedia(null);
-
-            $em->persist($trick);
+            $trick->setActive(true);
             $em->flush();
+
             $this->addFlash('notice','La figure à été ajoutée');
 
             return $this->redirectToRoute('app_trick', ['slug' => $form->getViewData()->getName()]);
