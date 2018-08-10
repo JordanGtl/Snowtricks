@@ -191,7 +191,22 @@ class TrickController extends AbstractController
 
         $trick = $repository->findOneBy(['name' => $slug]);
 
-        if($trick != null) {
+        if($trick != null)
+        {
+            $trick->setCoverMedia(null);
+
+            foreach($trick->getComments() as $comment)
+            {
+                $em->remove($comment);
+                $em->flush();
+            }
+
+            foreach($trick->getTrickMedia() as $media)
+            {
+                $em->remove($media);
+                $em->flush();
+            }
+
             $em->remove($trick);
             $em->flush();
         }
