@@ -97,14 +97,18 @@ class TrickController extends AbstractController
         {
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $trickmedia->getLink();
-            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
 
-            $file->move(
-                $this->getParameter('upload_directory'),
-                $fileName
-            );
+            if($file != null) {
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
-            $trickmedia->setLink($fileName);
+                $file->move(
+                    $this->getParameter('upload_directory'),
+                    $fileName
+                );
+
+                $trickmedia->setLink($fileName);
+            }
+
             $trickmedia->setIdFigure($trick);
             $trickmedia->setType(0);
 

@@ -26,7 +26,7 @@ class TrickMedia
     private $IdTrick;
 
     /**
-     * @ORM\Column(type="string", name="link")
+     * @ORM\Column(type="string", name="link", nullable=true)
      * @Assert\File(mimeTypes={ "image/jpeg","image/png","image/gif" })
      */
     private $Link;
@@ -40,6 +40,11 @@ class TrickMedia
      * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="CoverMedia")
      */
     private $tricks;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $VideoEmbed;
 
     public function __construct()
     {
@@ -114,6 +119,18 @@ class TrickMedia
                 $trick->setCoverMedia(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVideoEmbed(): ?string
+    {
+        return $this->VideoEmbed;
+    }
+
+    public function setVideoEmbed(?string $VideoEmbed): self
+    {
+        $this->VideoEmbed = $VideoEmbed;
 
         return $this;
     }

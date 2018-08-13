@@ -1,4 +1,7 @@
 {{ form_start(mediaform, {'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'method': 'POST'}) }}
+<h2>Choisir une image sur votre ordinateur</h2>
 {{ form_row(mediaform.Link) }}
+<h2>Ou entrer le code de partage d'une video</h2>
+{{ form_row(mediaform.videoEmbed, {'attr' : {'style' : 'min-height:150px;'}}) }}
 <button type="submit" class="btn btn-primary">Ajouter un media</button>
 {{ form_end(mediaform) }}

@@ -27,6 +27,7 @@ footer{background:#2b2b2b;color:#fff;padding:20px;}
 .bb{border-bottom:solid 1px #ccc;}
 .bt{border-top:solid 1px #ccc;}
 .InputHeight{min-height:100px;}
+iframe{max-width: 100% !important;max-height: 150px !important;}
 
 /* Figures */
 .FigureIcon > a > i{font-size:20px;margin-right:10px;color:#575757;}
@@ -39,6 +40,7 @@ footer{background:#2b2b2b;color:#fff;padding:20px;}
 .FigureUpdateBox > a:hover{color:#fff;}
 .LoadMoreComment{display:inline-block;background:#575757;color:#fff;padding:10px;}
 .CommentData{border-bottom: solid 1px #aaa;padding-bottom: 10px;}
+.card-img-media{height:150px;}
 
 /* Formulaires */
 form{width:100%;}
