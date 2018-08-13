@@ -72,6 +72,7 @@ class Member implements AdvancedUserInterface
 
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png","image/gif" })
      */
     private $Avatar;
 
@@ -80,12 +81,15 @@ class Member implements AdvancedUserInterface
      */
     private $active;
 
+    private $saveAvatar;
+
     public function __construct()
     {
         $this->figures = new ArrayCollection();
         $this->comments = new ArrayCollection();
 
         $this->Rank = array('ROLE_USER');
+        $this->saveAvatar = $this->getAvatar();
     }
 
     public function getId()
@@ -279,14 +283,26 @@ class Member implements AdvancedUserInterface
             ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
-    public function getAvatar(): ?string
+    public function getAvatar()
     {
         return $this->Avatar;
     }
 
-    public function setAvatar(?string $Avatar): self
+    public function setAvatar($Avatar): self
     {
         $this->Avatar = $Avatar;
+
+        return $this;
+    }
+
+    public function getSaveAvatar()
+    {
+        return $this->saveAvatar;
+    }
+
+    public function setSaveAvatar($Avatar): self
+    {
+        $this->saveAvatar = $Avatar;
 
         return $this;
     }

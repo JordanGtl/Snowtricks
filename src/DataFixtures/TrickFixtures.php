@@ -33,8 +33,12 @@ class TrickFixtures extends BaseFixtures implements DependentFixtureInterface
             $trick->setDescription($tricks[$count]['description']);
             $trick->setGroupid($tricks[$count]['groupid']);
             $trick->setAuthorid($tricks[$count]['authorid']);
-            $trick->setPublishedAt($faker->dateTimeBetween('-100 days', 'now'));
-            $trick->setUpdatedDate($faker->dateTimeBetween('-100 days', 'now'));
+            $trick->setPublishedAt($faker->dateTimeBetween('-100 days', '-50 days'));
+
+            if(rand(0, 1) == 1)
+                $trick->setUpdatedDate($faker->dateTimeBetween('-49 days', 'now'));
+            else
+                $trick->setUpdatedDate($trick->getPublishedAt());
 
         });
 

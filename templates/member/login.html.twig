@@ -4,23 +4,37 @@
 
 {% block body %}
 
-
     <div class="container">
-    <div class="col-lg-12 text-center p-4">
-        <h1>Identification</h1>
-        <div class="block p-3">
-            {% if error %}
-                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
+        <div class="col-lg-6 blockshadow  m-auto">
+            <header class="Title text-center col-lg-12">
+                Identification
+            </header>
 
-        {{ form_start(form, {'action': path('app_login'), 'method': 'POST'}) }}
-        {{ form_widget(form) }}
-        <input type="hidden" name="_target_path" value="/" />
-        <input type="hidden" name="_username" value="/" />
-        {{ form_end(form) }}
+            <div class="col-lg-12 text-left p-0 m-0">
+                <div class="block p-3">
+                    {% if error %}
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-            <div><a href="{{ path('app_account_lostpassword') }}">Mot de passe perdu</a> </div>
+                {{ form_start(form, {'action': path('app_login'), 'method': 'POST'}) }}
+                    <div class="FormGroup border-bottom-0 pb-0">
+                        <div class="logintext">Nom de compte</div>
+                        {{ form_errors(form.username) }}
+                        {{ form_widget(form.username) }}
+                    </div>
+                    <div class="FormGroup border-bottom-0 pb-0">
+                        <div class="logintext">Mot de passe</div>
+                        {{ form_errors(form.plainPassword) }}
+                        {{ form_widget(form.plainPassword) }}
+                    </div>
+                <input type="hidden" name="_target_path" value="/" />
+                <input type="hidden" name="_username" value="/" />
+                    <div class="text-center"><input type="submit" value="Se connecter" class="btn btn-success"></div>
+                {{ form_end(form) }}
+                </div>
+                    <div style="background: #ededed;" class="p-4"><a href="{{ path('app_account_lostpassword') }}">Mot de passe perdu</a> </div>
+
+            </div>
         </div>
-    </div>
     </div>
 {% endblock %}

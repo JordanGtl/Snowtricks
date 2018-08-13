@@ -1,8 +1,13 @@
 {{ form_start(trickform, {'action': path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')), 'method': 'POST'}) }}
-{{ form_row(trickform.name) }}
-{{ form_row(trickform.description, {'attr' : {'class' : 'InputHeight'}}) }}
-{{ form_row(trickform.groupid) }}
-<button type="submit" class="btn btn-primary d-lg-inline">{{ button_label|default('Editer la figure') }}</button>
+<b>Nom de la figure</b>
+{{ form_row(trickform.name, {'attr' : {'class' : 'InputTrickName', 'data-id' : trick.id}}) }}
+
+<b>Description</b>
+{{ form_row(trickform.description, {'attr' : {'class' : 'InputHeight InputTrickDesc'}}) }}
+
+<b>Groupe</b>
+{{ form_row(trickform.groupid, {'attr' : {'class' : 'InputTrickGroup'}}) }}
+<button type="submit" class="btn btn-primary d-lg-inline mt-3">{{ button_label|default('Editer la figure') }}</button>
 
 {% if app.request.attributes.get('slug') %}
 <a href="{{ path('app_trick_trash', {'slug' : app.request.attributes.get('slug')}) }}" class="btn btn-danger d-lg-inline">Supprimer la figure</a>

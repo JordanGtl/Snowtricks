@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Snowtrick | Figures{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <header class="Title text-center">
+            Mon compte
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <div class="block pl-4 pr-4 align-items-center justify-content-center row m-0 pt-2 pb-2">
+                    {{ form_start(form) }}
+                    <div class="FormGroup">
+                        <div>Nom de compte</div>
+                        <small>Ce champ représente votre nom de compte. Le nom de compte ets l'identifiants utilisé pour votre connexion sur notre plateforme uniquement. Vous ne pouvez pas le modifier.</small>
+                        {{ form_errors(form.username) }}
+                        {{ form_widget(form.username) }}
+                    </div>
+                    <div class="FormGroup">
+                        <div>Avatar</div>
+                        <small>Ce champ vous permet de choisir un avatar. Laisser le champ vide si vous ne souhaitez pas modifier votre avatar.</small>
+                        {{ form_errors(form.avatar) }}
+                        {{ form_widget(form.avatar) }}
+                    </div>
+                    <div class="FormGroup">
+                        <div>Mot de passe</div>
+                        <small>Ce champ vous permet de modifier votre mot de passe. Si vous souhaitez conserver votre mot de passe actuel, laisser les deux champs vide.</small>
+                        {{ form_errors(form.plainPassword) }}
+                        {{ form_widget(form.plainPassword) }}
+                    </div>
+                    <div class="text-center"><input type="submit" class="btn btn-success" value="Modifier mon profil"></div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

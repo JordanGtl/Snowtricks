@@ -4,15 +4,32 @@
 
 {% block body %}
 <div class="container">
-    <div class="col-lg-12 text-center">
-        {{ form_start(form) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.plainPassword.first) }}
-        {{ form_row(form.plainPassword.second) }}
+    <header class="Title text-center col-lg-6">
+        Inscription
+    </header>
+    <div class="col-lg-6 text-left mt-0 m-auto p-0">
+        <div class="block p-4">
 
-        <button type="submit">Créer mon compte</button>
-        {{ form_end(form) }}
+            {{ form_start(form) }}
+            <div class="FormGroup border-bottom-0 pb-0">
+                <div class="logintext">Nom de compte</div>
+                {{ form_errors(form.username) }}
+                {{ form_widget(form.username) }}
+            </div>
+            <div class="FormGroup border-bottom-0 pb-0">
+                <div class="logintext">Email</div>
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email) }}
+            </div>
+            <div class="FormGroup border-bottom-0 pb-0">
+                <div class="logintext">Mot de passe</div>
+                {{ form_row(form.plainPassword.first) }}
+                {{ form_row(form.plainPassword.second, {'attr' : {'placeholder' : 'Répéter'}}) }}
+            </div>
+
+            <div class="text-center"><button type="submit" class="btn btn-success">Créer mon compte</button></div>
+            {{ form_end(form) }}
+        </div>
     </div>
 </div>
 {% endblock %}

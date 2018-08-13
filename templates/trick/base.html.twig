@@ -10,18 +10,18 @@
                     {% endif %}
                 {% endif %}</div>
             <div class="FigureName">{{ trick.name }}</div>
-            <img class="card-img-top" src="{{ trick.CoverMedia ? "/uploads/#{trick.CoverMedia.link}" : '/images/trickdefaultcover.jpg' }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ trick.CoverMedia ? "/uploads/medias/#{trick.CoverMedia.link}" : '/images/trickdefaultcover.jpg' }}" alt="Card image cap">
         </div>
 
     </div>
 </div>
 <div class="col-12">
-    <div class="row FiguresMedia m-0 pt-4  d-none d-lg-flex">
+    <div class="row FiguresMedia m-0 {% if trick.trickMedia|length > 0 %}pt-4{% else %}pt-0{% endif %}  d-none d-lg-flex">
         {% for medias in trick.trickMedia %}
         <div class="col-lg-2 FigureBox mb-3">
             <div class="card">
                 {% if medias.VideoEmbed == null %}
-                <img class="card-img-media" src="/uploads/{{ medias.link }}" alt="Card image cap">
+                <img class="card-img-media" src="/uploads/medias/{{ medias.link }}" alt="Card image cap">
                 {% else %}
                     {{ medias.VideoEmbed|raw }}
                 {% endif %}

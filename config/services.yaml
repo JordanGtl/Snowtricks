@@ -4,8 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'fr'
-    upload_directory: '../public/uploads'
+    locale: "en"
+    siteurl: 'http://ocp6'
+    upload_directory_trick: '../public/uploads/medias'
+    upload_directory_avatar: '../public/uploads/avatars'
     comment_per_page: 10
     trick_index_nbr: 6
 

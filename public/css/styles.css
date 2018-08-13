@@ -1,6 +1,6 @@
 /* All */
 html{height:100%;}
-body{height:100%;font-size:14px;background:#eee;background:url('../images/trick.jpg');background-size: 100% 100%;background-attachment: fixed;}
+body{height:100%;font-size:14px;background:#eee;background:url('../images/bg2.jpg');background-size: 100% 100%;background-attachment: fixed;}
 
 /* Navigation */
 .navbar{background-color: #363636 !important;padding:0 20px;}
@@ -16,6 +16,8 @@ body{height:100%;font-size:14px;background:#eee;background:url('../images/trick.
 .DownArrow{position: absolute;bottom: 0;right: 20px;}
 .DownArrow > a > i{color:#fff;}
 .DownArrow > a > i:hover{color:#575757;}
+.Title{background:#575757;color:#fff;min-height:200px;line-height:200px;margin:40px auto 0 auto;font-weight:bold;font-size:40px;}
+.TitleWhite{background:#fff;color:#575757;min-height:200px;line-height:200px;margin:40px auto 0 auto;font-weight:bold;font-size:40px;}
 
 /* Footer */
 footer{background:#2b2b2b;color:#fff;padding:20px;}
@@ -28,6 +30,7 @@ footer{background:#2b2b2b;color:#fff;padding:20px;}
 .bt{border-top:solid 1px #ccc;}
 .InputHeight{min-height:100px;}
 iframe{max-width: 100% !important;max-height: 150px !important;}
+.blockshadow{box-shadow: #0101014d 0px 0px 17px 0;    padding: 0;}
 
 /* Figures */
 .FigureIcon > a > i{font-size:20px;margin-right:10px;color:#575757;}
@@ -44,6 +47,13 @@ iframe{max-width: 100% !important;max-height: 150px !important;}
 
 /* Formulaires */
 form{width:100%;}
+.FormGroup {width:100%;margin-bottom:10px;padding-bottom:20px;border-bottom:solid 1px #ccc;}
+.FormGroup > small{display:block;margin-bottom:10px;}
+.FormGroup > input[type=text]{display:block;width:100%;}
+.form-group > label{display:none;}
+.form-group {margin-top:10px;margin-bottom:0;}
+.logintext {font-size:15px;font-weight:bold;margin-bottom:5px;color:#575757;}
+.logintext {font-size:15px;font-weight:bold;margin-bottom:5px;color:#575757;}
 
 /* Flash Message */
 .alert{

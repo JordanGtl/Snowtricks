@@ -70,6 +70,11 @@ $('.LinkDelTrick').click(function(e){
 
 $( document ).ready(function() {
     $('.alert').delay(3000).fadeOut(5000);
+
+    $('.InputTrickName').each(function()
+    {
+        $('.FigureName').text($(this).val());
+    });
 });
 
 $('.TrickEditBtn').click(function(){
@@ -122,4 +127,47 @@ $('.ShowMedia').click(function()
 {
     $('.FiguresMedia').removeClass('d-none');
     $(this).addClass('d-none');
+});
+
+function SaveTrick()
+{
+    var id = $('.InputTrickName').attr('data-id');
+
+    $.ajax({
+        url: "/TrickNewSave/" + id,
+        method:'POST',
+        data: { name: $('.InputTrickName').val(), description: $('.InputTrickDesc').val(), group: $('.InputTrickGroup').val() }
+    })
+        .done(function( data )
+        {
+
+        });
+}
+
+console.log(window.location.pathname);
+
+$('.InputTrickName').keyup(function()
+{
+    if(window.location.pathname != '/index.php/TrickNew' && window.location.pathname != '/TrickNew')
+        return;
+
+    $('.FigureName').text($(this).val());
+
+    SaveTrick();
+});
+
+$('.InputTrickDesc').keyup(function()
+{
+    if(window.location.pathname != '/index.php/TrickNew' && window.location.pathname != '/TrickNew')
+        return;
+
+    SaveTrick();
+});
+
+$('.InputTrickGroup').change(function()
+{
+    if(window.location.pathname != '/index.php/TrickNew' && window.location.pathname != '/TrickNew')
+        return;
+
+    SaveTrick();
 });
