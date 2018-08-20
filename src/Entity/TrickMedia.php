@@ -32,11 +32,6 @@ class TrickMedia
     private $Link;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $type;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Trick", mappedBy="CoverMedia")
      */
     private $tricks;
@@ -45,6 +40,13 @@ class TrickMedia
      * @ORM\Column(type="text", nullable=true)
      */
     private $VideoEmbed;
+
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $title;
+
+    private $tempLink;
 
     public function __construct()
     {
@@ -80,14 +82,14 @@ class TrickMedia
         return $this;
     }
 
-    public function getType(): ?int
+    public function getTempLink() : ?string
     {
-        return $this->type;
+        return $this->tempLink;
     }
 
-    public function setType(int $type): self
+    public function setTempLink($tempLink): self
     {
-        $this->type = $type;
+        $this->tempLink = $tempLink;
 
         return $this;
     }
@@ -131,6 +133,18 @@ class TrickMedia
     public function setVideoEmbed(?string $VideoEmbed): self
     {
         $this->VideoEmbed = $VideoEmbed;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }

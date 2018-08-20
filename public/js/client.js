@@ -83,9 +83,10 @@ $('.TrickEditBtn').click(function(){
     alert('edition du media : ' + id);
 });
 
-$('.TrickTrashBtn').click(function(){
+
+$('.btnmodalmediadel').click(function()
+{
     var id = $(this).attr('data-id');
-    var parent = $(this);
 
     $.ajax({
         url: "/MediaDel/" + id,
@@ -98,9 +99,19 @@ $('.TrickTrashBtn').click(function(){
                 alert('supression erreur');
             else
             {
-                parent.closest('.FigureBox').remove();
+                $('.TrickTrashBtn2').each(function(){
+                    if($(this).attr('data-id') == id)
+                    {
+                        console.log($(this));
+                        $(this).closest('.FigureBox').remove();
+                    }
+                });
             }
         });
+});
+
+$('.TrickTrashBtn2').click(function() {
+    $('.btnmodalmediadel').attr('data-id', $(this).attr('data-id'));
 });
 
 $('.TrickSetMasterPic').click(function(){
@@ -170,4 +181,9 @@ $('.InputTrickGroup').change(function()
         return;
 
     SaveTrick();
+});
+
+$('.TrickDelBtn').click(function()
+{
+    $('.btnmodalconfirm').attr('href', $(this).attr('href'));
 });

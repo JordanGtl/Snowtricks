@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>Snowtricks | {% block title %}Page{% endblock %}</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
             <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}" />
@@ -36,7 +36,7 @@
                     {% else %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_register') }}" data-target="#myModal" data-toggle="modal">Inscription</a>
+                            <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                         </li>
                     {% endif %}
 
@@ -44,6 +44,44 @@
                 </ul>
             </div>
         </nav>
+
+        <!-- Modal trick -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Confirmation de supression</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Etes vous sur de vouloir supprimer cette figure ainsi que tout ses médias associés.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-primary btnmodalconfirm">Oui</a>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal media -->
+        <div id="mediaModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Confirmation de supression</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Etes vous sur de vouloir supprimer ce media.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-primary btnmodalmediadel" data-dismiss="modal">Oui</a>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% block body %}{% endblock %}
         {% block javascripts %}

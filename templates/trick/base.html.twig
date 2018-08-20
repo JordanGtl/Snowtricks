@@ -1,11 +1,11 @@
-<div class="col-lg-12 mb-0 mt-4">
+<div class="col-lg-12 mb-0 mt-lg-4">
     <div class="card">
         <div class="FigureImg">
             <div class="FigureUpdateBox">
                 {% if is_granted('ROLE_USER') %}
                     {% if editmode == false %}
                         <a href="{{ path('app_trick_edit', {'slug' : trick.name}) }}"><i class="fa fa-pencil"></i></a>
-                        <a class="LinkDelTrick" href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
+                        <a data-toggle="modal" data-target="#myModal" class="TrickDelBtn" href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
                     {% else %}
                     {% endif %}
                 {% endif %}</div>
@@ -21,7 +21,7 @@
         <div class="col-lg-2 FigureBox mb-3">
             <div class="card">
                 {% if medias.VideoEmbed == null %}
-                <img class="card-img-media" src="/uploads/medias/{{ medias.link }}" alt="Card image cap">
+                <img class="card-img-media" src="/uploads/medias/{{ medias.tempLink ? medias.tempLink : medias.link }}" alt="{{ medias.title }}">
                 {% else %}
                     {{ medias.VideoEmbed|raw }}
                 {% endif %}
@@ -29,8 +29,8 @@
             <div>
                 {% if is_granted('ROLE_USER') %}
                     {% if editmode == true %}
-                        <a href="#" data-id="{{ medias.id }}" class="TrickEditBtn"><i class="fa fa-pencil"></i></a>
-                        <a href="#" data-id="{{ medias.id }}" class="TrickTrashBtn"><i class="fa fa-trash"></i></a>
+                        <a href="{{ path('app_mediaedit', {'index' : medias.id}) }}" data-id="{{ medias.id }}"><i class="fa fa-pencil"></i></a>
+                        <a href="#"  data-toggle="modal" data-target="#mediaModal" data-id="{{ medias.id }}" class="TrickTrashBtn2"><i class="fa fa-trash"></i></a>
                         {% if medias.VideoEmbed == null %}
                             <a href="#" data-id="{{ medias.id }}" data-trick="{{ trick.id }}" data-trickname="{{ trick.name }}" class="TrickSetMasterPic"><i class="fa fa-arrow-circle-up"></i></a>
                         {% endif %}

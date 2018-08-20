@@ -7,6 +7,8 @@ use App\Form\LoginType;
 use App\Form\MemberType;
 use App\Form\PasswordChangeType;
 use App\Form\PasswordLostType;
+use App\Service\Mail;
+use App\Service\Upload;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +18,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-class MemberController extends BaseController
+class MemberController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, Mail $mail, EntityManagerInterface $em)
     {
         $user = $this->getUser();
 
@@ -43,24 +45,10 @@ class MemberController extends BaseController
             $user->setActive(false);
             $user->setValidationtoken(md5(uniqid()));
 
-            $mail = (new \Swift_Message('Snowtrick - Validation d\'inscription'))
-                ->setFrom('contact@gtl-studio.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        'mail/activate.html.twig',
-                        array('username' => $user->getUsername(), 'link' => $this->getParameter('siteurl').'/Activate/'.$user->getValidationtoken())
-                    ),
-                    'text/html'
-                )
-            ;
+            $mail->send($user->getEmail(), 'Snowtrick - Validation d\'inscription', 'mail/activate.html.twig', array('username' => $user->getUsername(), 'link' => $this->getParameter('siteurl').'/Activate/'.$user->getValidationtoken()));
 
-            $mailer->send($mail);
-
-            // 4) save the User!
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em->persist($user);
+            $em->flush();
 
             $this->addFlash('notice', 'Un email à été envoyé à l\'adresse "'.$user->getEmail().'". Veuillez cliquez sur le lien contenu dans ce mail pour compléter votre inscription et activer votre compte');
 
@@ -131,7 +119,7 @@ class MemberController extends BaseController
     /**
      * @Route("/LostPassword", name="app_account_lostpassword")
      */
-    public function lostpassword(Request $request, EntityManagerInterface $em, \Swift_Mailer $mailer)
+    public function lostpassword(Request $request, EntityManagerInterface $em, Mail $mail)
     {
         $form = $this->createForm(PasswordLostType::class);
         $message = '';
@@ -150,20 +138,7 @@ class MemberController extends BaseController
                 $user->setPasswordtoken(md5(uniqid()));
                 $em->flush();
 
-
-                $mail = (new \Swift_Message('Snowtrick - Récupération du mot de passe'))
-                    ->setFrom('contact@gtl-studio.com')
-                    ->setTo($user->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            'mail/password.html.twig',
-                            array('username' => $user->getUsername(), 'link' => $this->getParameter('siteurl').'/PasswordChange/'.$user->getPasswordtoken())
-                        ),
-                        'text/html'
-                    )
-                ;
-
-                $mailer->send($mail);
+                $mail->send($user->getEmail(), 'Snowtrick - Récupération du mot de passe', 'mail/password.html.twig', array('username' => $user->getUsername(), 'link' => $this->getParameter('siteurl').'/PasswordChange/'.$user->getPasswordtoken()));
             }
         }
 
@@ -216,7 +191,7 @@ class MemberController extends BaseController
     /**
      * @Route("/MyAccount", name="app_myaccount")
      */
-    public function myaccount(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
+    public function myaccount(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Upload $upload)
     {
         $member = $this->getUser();
         $member->setSaveAvatar($member->getAvatar());
@@ -226,21 +201,12 @@ class MemberController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            dump($member);
-
             /** @var Symfony\Component\HttpFoundation\File\UploadedFile $avatar */
             $avatar = $member->getAvatar();
 
             if($avatar != null)
             {
-                $fileName = $this->generateUniqueFileName() . '.' . $avatar->guessExtension();
-
-                $avatar->move(
-                    $this->getParameter('upload_directory_avatar'),
-                    $fileName
-                );
-
-                $member->setAvatar($fileName);
+                $member->setAvatar($upload->Upload($avatar, $this->getParameter('upload_directory_avatar')));
             }
             else
             {

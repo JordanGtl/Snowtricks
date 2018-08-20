@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Snowtrick | Inscription{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -14,16 +14,16 @@
             <div class="FormGroup border-bottom-0 pb-0">
                 <div class="logintext">Nom de compte</div>
                 {{ form_errors(form.username) }}
-                {{ form_widget(form.username) }}
+                {{ form_widget(form.username, {'attr' : {'placeholder' : 'Antoine'}}) }}
             </div>
             <div class="FormGroup border-bottom-0 pb-0">
                 <div class="logintext">Email</div>
                 {{ form_errors(form.email) }}
-                {{ form_widget(form.email) }}
+                {{ form_widget(form.email, {'attr' : {'placeholder' : 'antoine@email.fr'}}) }}
             </div>
             <div class="FormGroup border-bottom-0 pb-0">
                 <div class="logintext">Mot de passe</div>
-                {{ form_row(form.plainPassword.first) }}
+                {{ form_row(form.plainPassword.first, {'attr' : {'placeholder' : 'Mot de passe'}}) }}
                 {{ form_row(form.plainPassword.second, {'attr' : {'placeholder' : 'Répéter'}}) }}
             </div>
 

@@ -16,6 +16,7 @@ class TrickMediaType extends AbstractType
         $builder
             ->add('Link', FileType::class, array('required' => false))
             ->add('videoEmbed', TextareaType::class, array('required' => false))
+            ->add('title')
         ;
     }
 

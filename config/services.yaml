@@ -8,7 +8,7 @@ parameters:
     siteurl: 'http://ocp6'
     upload_directory_trick: '../public/uploads/medias'
     upload_directory_avatar: '../public/uploads/avatars'
-    comment_per_page: 10
+    comment_per_page: 2
     trick_index_nbr: 6
 
 services:

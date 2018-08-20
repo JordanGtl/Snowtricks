@@ -9,11 +9,12 @@ use App\Form\CommentType;
 use App\Form\TrickMediaType;
 use App\Form\TrickType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class TrickController extends BaseController
+class TrickController extends AbstractController
 {
     /**
      * @Route("/Tricks", name="app_tricks")
@@ -22,7 +23,7 @@ class TrickController extends BaseController
     {
         $repository = $em->getRepository(Trick::class);
 
-        $tricks = $repository->findAll();
+        $tricks = $repository->findBy(['active' => true]);
 
         return $this->render('trick/list.html.twig', ['tricks' => $tricks]);
     }
@@ -36,28 +37,32 @@ class TrickController extends BaseController
         $repositorycom = $em->getRepository(Comment::class);
 
         $trick = $repository->findOneBy(['name' => $slug]);
+
+        if($trick == null)
+        {
+            $this->addFlash('notice', 'La figure que vous éssayer d\'atteindre n\'existe pas.');
+            return $this->redirectToRoute('app_tricks');
+        }
+
         $form = $this->createForm(CommentType::class);
 
         $comments = ($trick != null) ? $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), $this->getParameter('comment_per_page'), 0) : '';
 
-        if ($request->getMethod() == 'POST')
-        {
-            $form->handleRequest($request);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $user = $this->getUser();
-                $com = $form->getData();
-                $com->setTrickid($trick);
-                $com->setAuthorid($user);
-                $com->setUpdatedate(new \DateTime('@'.strtotime('now')));
+            $user = $this->getUser();
+            $com = $form->getData();
+            $com->setTrickid($trick);
+            $com->setAuthorid($user);
+            $com->setUpdatedate(new \DateTime('@'.strtotime('now')));
 
-                $em->persist($com);
-                $em->flush();
+            $em->persist($com);
+            $em->flush();
 
-                return $this->redirectToRoute('app_trick', array('slug' => $slug));
+            return $this->redirectToRoute('app_tricks', array('slug' => $slug));
             }
-        }
 
         return $this->render('trick/detail.html.twig', [
             'trick' => $trick,
@@ -66,62 +71,6 @@ class TrickController extends BaseController
             'commpentbaseindex' => $this->getParameter('comment_per_page'),
             'editmode' => false
         ]);
-    }
-
-    /**
-     * @Route("/Trick/{slug}/addmedia", name="app_trick_addmedia")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function addmedia($slug, Request $request, EntityManagerInterface $em)
-    {
-        $repository = $em->getRepository(Trick::class);
-        $trick = $repository->findOneBy(['id' => $slug]);
-
-        $trickmedia = new TrickMedia();
-        $form = $this->createForm(TrickMediaType::class, $trickmedia);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
-            $file = $trickmedia->getLink();
-
-            if($file != null) {
-                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
-
-                $file->move(
-                    $this->getParameter('upload_directory_trick'),
-                    $fileName
-                );
-
-                $trickmedia->setLink($fileName);
-            }
-
-            $trickmedia->setIdFigure($trick);
-            $trickmedia->setType(0);
-
-            $em->persist($trickmedia);
-            $em->flush();
-            $this->addFlash('notice','Le nouveau média à été ajoutée');
-
-            if($trick->getName() == $this->getUser()->getUsername())
-            {
-                if($trick->getCoverMedia() == null)
-                {
-                    $trick->setCoverMedia($trickmedia);
-                    $em->flush();
-                }
-
-                return $this->redirectToRoute('app_trick_new');
-            }
-            else
-                return $this->redirectToRoute('app_trick', ['slug' => $trick->getName()]);
-        }
-
-        return $this->render('trick/addmedia.html.twig', [
-            'trick' => $trick,
-            'mediaform' => $form->createView(),
-            'editmode' => false]);
     }
 
     /**
@@ -157,8 +106,6 @@ class TrickController extends BaseController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        //TODO : Récupéré la figure par l'id et non pas par le nom pour permettre l'enregistrement du nom lors de l'édition 
-
         $tricRepo = $em->getRepository(Trick::class);
         $dbtrick = $tricRepo->findOneBy(['authorid' => $this->getUser(), 'active' => false]);
 

@@ -10,6 +10,6 @@
 <button type="submit" class="btn btn-primary d-lg-inline mt-3">{{ button_label|default('Editer la figure') }}</button>
 
 {% if app.request.attributes.get('slug') %}
-<a href="{{ path('app_trick_trash', {'slug' : app.request.attributes.get('slug')}) }}" class="btn btn-danger d-lg-inline">Supprimer la figure</a>
+<a data-toggle="modal" data-target="#myModal" href="{{ path('app_trick_trash', {'slug' : app.request.attributes.get('slug')}) }}" class="btn btn-danger d-lg-inline">Supprimer la figure</a>
 {% endif %}
 {{ form_end(trickform) }}

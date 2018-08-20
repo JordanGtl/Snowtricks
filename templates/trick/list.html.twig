@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Snowtrick | Figures{% endblock %}
+{% block title %}Figures{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -15,7 +15,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-8">
-                                    <h5 class="card-title">{{ trick.name }}</h5>
+                                    <h5 class="card-title"><a href="{{ path('app_trick', {'slug' : trick.name}) }}">{{ trick.name }}</a></h5>
                                     <small>{{ trick.groupid.name }}</small>
                                 </div>
                                 <div class="col-4">
