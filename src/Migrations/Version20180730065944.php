@@ -15,7 +15,6 @@ final class Version20180730065944 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE comment DROP FOREIGN KEY FK_9474526CB80E8715');
         $this->addSql('ALTER TABLE figure_picture DROP FOREIGN KEY FK_1C84F60B85F5AD92');
         $this->addSql('ALTER TABLE figure_video DROP FOREIGN KEY FK_6EEA5C1585F5AD92');
         $this->addSql('ALTER TABLE figure DROP FOREIGN KEY FK_2F57B37AB3BB53C');
@@ -27,12 +26,12 @@ final class Version20180730065944 extends AbstractMigration
         $this->addSql('ALTER TABLE trick ADD CONSTRAINT FK_D8F0A91EB3BB53C FOREIGN KEY (groupid_id) REFERENCES trick_group (id)');
         $this->addSql('ALTER TABLE trick ADD CONSTRAINT FK_D8F0A91EC68E6693 FOREIGN KEY (authorid_id) REFERENCES member (id)');
         $this->addSql('ALTER TABLE trick_video ADD CONSTRAINT FK_B7E8DA9385F5AD92 FOREIGN KEY (id_figure_id) REFERENCES trick (id)');
-        $this->addSql('DROP TABLE figure');
-        $this->addSql('DROP TABLE figure_group');
-        $this->addSql('DROP TABLE figure_picture');
         $this->addSql('DROP TABLE figure_video');
+		$this->addSql('DROP TABLE figure_group');
+        $this->addSql('DROP TABLE figure_picture');
         $this->addSql('ALTER TABLE comment DROP FOREIGN KEY FK_9474526CB80E8715');
         $this->addSql('ALTER TABLE comment ADD CONSTRAINT FK_9474526CB80E8715 FOREIGN KEY (figureid_id) REFERENCES trick (id)');
+		$this->addSql('DROP TABLE figure');
     }
 
     public function down(Schema $schema) : void
