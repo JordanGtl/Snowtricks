@@ -17,7 +17,15 @@ class DefaultController extends AbstractController
 
         $figures = $repository->findActive($this->getParameter('trick_index_nbr'));
 
-        return $this->render('default/home.html.twig', ['figures' => $figures, 'figurebaseindex' => 6]);
+        return $this->render('default/home.html.twig', ['figures' => $figures, 'figurebaseindex' => $this->getParameter('trick_index_nbr')]);
+    }
+
+    /**
+     * @Route("/MentionsLegales", name="ml")
+     */
+    public function ml(EntityManagerInterface $em)
+    {
+        return $this->render('default/ml.html.twig');
     }
 
     

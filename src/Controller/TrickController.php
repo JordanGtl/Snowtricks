@@ -40,7 +40,7 @@ class TrickController extends AbstractController
 
         if($trick == null)
         {
-            $this->addFlash('notice', 'La figure que vous éssayer d\'atteindre n\'existe pas.');
+            $this->addFlash('error', 'La figure que vous éssayer d\'atteindre n\'existe pas.');
             return $this->redirectToRoute('app_tricks');
         }
 
@@ -117,7 +117,7 @@ class TrickController extends AbstractController
             $trick->setAuthorid($this->getUser());
             $trick->setCoverMedia(null);
             $trick->setActive(false);
-            $trick->setName($this->getUser()->getUsername());
+            $trick->setName('');
             $trick->setDescription('');
 
             $em->persist($trick);
@@ -244,7 +244,7 @@ class TrickController extends AbstractController
     {
         $repository = $em->getRepository(Trick::class);
 
-        $tricks = $repository->createQueryBuilder('n')->setMaxResults(6)->setFirstResult($index)->getQuery()->getResult();
+        $tricks = $repository->findByPagination($this->getParameter('trick_index_nbr'), $index);
 
         $results = array();
 

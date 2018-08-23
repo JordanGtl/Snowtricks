@@ -15,13 +15,13 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-8">
-                                    <h5 class="card-title"><a href="{{ path('app_trick', {'slug' : trick.name}) }}">{{ trick.name }}</a></h5>
+                                    <h5 class="card-title m-0"><a href="{{ path('app_trick', {'slug' : trick.name}) }}">{{ trick.name }}</a></h5>
                                     <small>{{ trick.groupid.name }}</small>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4 text-right TrickIcon">
                                     {% if is_granted('ROLE_USER') %}
-                                    <i class="fa fa-pencil"></i>
-                                    <i class="fa fa-trash"></i>
+                                    <a href="{{ path('app_trick_edit', {'slug' : trick.name}) }}"><i class="fa fa-pencil"></i></a>
+                                    <a data-toggle="modal" data-target="#myModal" class="TrickDelBtn ModalLinkConfirm" data-title="Confirmation de supression" data-content="Etes vous sur de vouloir supprimer cette figure ainsi que tout ses médias associés." href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
             {% endfor %}
         </div>
         {% if is_granted('ROLE_USER') %}
-        <div class="block"><a href="{{ path('app_trick_new') }}">Ajouter une figure</a></div>
+        <div class="block text-center"><a class="m-4 btn btn-primary" href="{{ path('app_trick_new') }}">Ajouter une figure</a></div>
         {% endif %}
     </div>
 {% endblock %}

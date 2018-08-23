@@ -5,7 +5,7 @@
                 {% if is_granted('ROLE_USER') %}
                     {% if editmode == false %}
                         <a href="{{ path('app_trick_edit', {'slug' : trick.name}) }}"><i class="fa fa-pencil"></i></a>
-                        <a data-toggle="modal" data-target="#myModal" class="TrickDelBtn" href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
+                        <a data-toggle="modal" data-target="#myModal" class="TrickDelBtn ModalLinkConfirm" data-title="Confirmation de supression" data-content="Etes vous sur de vouloir supprimer cette figure ainsi que tout ses médias associés." href="{{ path('app_trick_trash', {'slug' : trick.name}) }}"><i class="fa fa-trash"></i></a>
                     {% else %}
                     {% endif %}
                 {% endif %}</div>
@@ -30,7 +30,7 @@
                 {% if is_granted('ROLE_USER') %}
                     {% if editmode == true %}
                         <a href="{{ path('app_mediaedit', {'index' : medias.id}) }}" data-id="{{ medias.id }}"><i class="fa fa-pencil"></i></a>
-                        <a href="#"  data-toggle="modal" data-target="#mediaModal" data-id="{{ medias.id }}" class="TrickTrashBtn2"><i class="fa fa-trash"></i></a>
+                        <a href="#"  data-toggle="modal" data-target="#mediaModal" data-id="{{ medias.id }}" class="TrickTrashBtn2 ModalLinkConfirm"><i class="fa fa-trash"></i></a>
                         {% if medias.VideoEmbed == null %}
                             <a href="#" data-id="{{ medias.id }}" data-trick="{{ trick.id }}" data-trickname="{{ trick.name }}" class="TrickSetMasterPic"><i class="fa fa-arrow-circle-up"></i></a>
                         {% endif %}

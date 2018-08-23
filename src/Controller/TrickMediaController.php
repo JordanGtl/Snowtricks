@@ -76,7 +76,6 @@ class TrickMediaController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-
             $trickmedia->setLink($upload->Upload($trickmedia->getLink(), $this->getParameter('upload_directory_trick')));
             $trickmedia->setIdFigure($trick);
 
@@ -119,7 +118,7 @@ class TrickMediaController extends AbstractController
 
         if($trickmedia == null)
         {
-            $this->addFlash('error', 'Le mdia que vous éssayez d\'éditer n\'existe pas');
+            $this->addFlash('error', 'Le media que vous éssayez d\'éditer n\'existe pas');
             return $this->redirectToRoute('app_trick');
         }
 

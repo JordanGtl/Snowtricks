@@ -33,19 +33,19 @@ class TrickRepository extends ServiceEntityRepository
 //    /**
 //     * @return Figure[] Returns an array of Figure objects
 //     */
-    /*
-    public function findByExampleField($value)
+
+    public function findByPagination($limit, $index)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('f.active = 1')
             ->orderBy('f.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults($limit)
+            ->setFirstResult($index)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Figure

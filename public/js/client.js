@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////////////
+// Trick Ajax
+//////////////////////////////////////////////////////////////////////////////////////
 $( ".LoadMoreComment" ).click(function(e) {
     e.preventDefault();
 
@@ -14,7 +17,11 @@ $( ".LoadMoreComment" ).click(function(e) {
             console.log(data);
 
             if(data.length == 0)
-                alert('Les derniers commentaires ont déjà été chargés');
+            {
+                $('.ModalAlertTitle').text('Commentaires');
+                $('.ModalAlertContent').text('Tout les commentaires ont été chargés, il n\'y a plus de nouveau commentaire');
+                $("#myModalAlert").modal();
+            }
             else
             {
                 for(var i =0; i < data.length; ++i)
@@ -47,8 +54,11 @@ $( ".LoadMoreFigure" ).click(function(e) {
     .done(function( data ) {
         console.log(data);
 
-        if(data.length == 0)
-            alert('Les dernieres figures ont déjà été chargées');
+        if(data.length == 0) {
+            $('.ModalAlertTitle').text('Chargement des figures');
+            $('.ModalAlertContent').text('Les dernieres figures ont déjà été chargées');
+            $("#myModalAlert").modal();
+        }
         else
         {
             for(var i =0; i < data.length; ++i)
@@ -63,12 +73,8 @@ $( ".LoadMoreFigure" ).click(function(e) {
     });
 });
 
-$('.LinkDelTrick').click(function(e){
-    if(!confirm("êtes vous sur de vouloir supprimer la figure ainsi que tout les commentaires et médias associés ?"))
-        e.preventDefault();
-});
-
-$( document ).ready(function() {
+$( document ).ready(function()
+{
     $('.alert').delay(3000).fadeOut(5000);
 
     $('.InputTrickName').each(function()
@@ -77,13 +83,9 @@ $( document ).ready(function() {
     });
 });
 
-$('.TrickEditBtn').click(function(){
-    var id = $(this).attr('data-id');
-
-    alert('edition du media : ' + id);
-});
-
-
+//////////////////////////////////////////////////////////////////////////////////////
+// Trick Medias
+//////////////////////////////////////////////////////////////////////////////////////
 $('.btnmodalmediadel').click(function()
 {
     var id = $(this).attr('data-id');
@@ -140,6 +142,9 @@ $('.ShowMedia').click(function()
     $(this).addClass('d-none');
 });
 
+//////////////////////////////////////////////////////////////////////////////////////
+// New trick
+//////////////////////////////////////////////////////////////////////////////////////
 function SaveTrick()
 {
     var id = $('.InputTrickName').attr('data-id');
@@ -154,8 +159,6 @@ function SaveTrick()
 
         });
 }
-
-console.log(window.location.pathname);
 
 $('.InputTrickName').keyup(function()
 {
@@ -183,7 +186,18 @@ $('.InputTrickGroup').change(function()
     SaveTrick();
 });
 
-$('.TrickDelBtn').click(function()
+//////////////////////////////////////////////////////////////////////////////////////
+// Modal
+//////////////////////////////////////////////////////////////////////////////////////
+$('.ModalLinkConfirm').click(function()
 {
+    $('.ModalConfirmTitle').text($(this).attr('data-title'));
+    $('.ModalConfirmContent').text($(this).attr('data-content'));
     $('.btnmodalconfirm').attr('href', $(this).attr('href'));
+});
+
+$('.ModalLinkAlert').click(function()
+{
+    $('.ModalAlertTitle').text($(this).attr('data-title'));
+    $('.ModalAlertContent').text($(this).attr('data-content'));
 });
