@@ -2,15 +2,12 @@
 namespace App\Service;
 
 
+use Symfony\Component\Filesystem\Filesystem;
+
 class Upload
 {
-    private  $mailer;
-    private $templating;
-
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $templating)
+    public function __construct()
     {
-        $this->mailer = $mailer;
-        $this->templating = $templating;
     }
 
     public function Upload($file, $directory)
@@ -20,7 +17,7 @@ class Upload
         if($file != null) {
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
-            $file->move(
+            $file->copy(
                 $directory,
                 $fileName
             );
@@ -29,6 +26,16 @@ class Upload
         }
 
         return null;
+    }
+
+    public function FixtureUpload($path, $name)
+    {
+        $fileSystem = new Filesystem();
+        $fileSystem->copy(
+            str_replace('\\', '/', dirname(dirname(__DIR__)).'/public/images/figures/'.$name),
+            str_replace('\\', '/', dirname(dirname(__DIR__)).'/public/uploads/medias/'.$name));
+
+        return $name;
     }
 
     /**

@@ -10,7 +10,7 @@ class TrickGroupFixtures extends BaseFixtures
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(TrickGroup::class, 6, function(TrickGroup $trick, $count)
+        $this->createMany(TrickGroup::class, 6, function(TrickGroup $trick, $count, $manager)
         {
             switch($count)
             {

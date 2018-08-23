@@ -54,6 +54,7 @@ hr:after{content: "OU";display: inline-block;    position: relative;    top: -.8
 .TrickIcon > a > i{margin-left:10px;}
 .TrickIcon > a {color:#575757;}
 .TrickIcon > a:hover {color: rgba(0, 0, 0);}
+.TrickBottom{border-bottom: solid 1px #aaa;}
 
 /* Formulaires */
 form{width:100%;}
@@ -68,6 +69,7 @@ form{width:100%;}
 /* Flash Message */
 .alert{background: #1374c3;position: fixed;margin: 1%;display: block;width: 98%;color: #fff;z-index: 999;}
 .alert-error{background: #c3222f!important;position: fixed;margin: 1%;display: block;width: 98%;color: #fff;z-index: 999;}
+.card-img-top-list{height:300px;}
 
 /* Media Query */
 /* Small devices (landscape phones, 576px and up) */
@@ -83,6 +85,7 @@ form{width:100%;}
     .IndexLoadMore {padding: 0;}
     .FigureName{font-size:40px!important;}
     .card-img-media {max-height:none;}
+    .card-img-top-list{height:200px;}
 }
 
 /* Medium devices (tablets, 768px and up) */

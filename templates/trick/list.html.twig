@@ -11,7 +11,7 @@
             {% for trick in tricks %}
                 <div class="col-lg-4 p-4">
                     <div class="card">
-                        <img class="card-img-top" src="http://franceolympique.com/files/Image/Equipe-de-France/actualite/2012/rodrig1.jpg" alt="Card image cap">
+                        <img class="card-img-top card-img-top-list" src="{{ trick.coverMedia ? "/uploads/medias/#{trick.coverMedia.link}" : '/images/figures/default.jpg' }}" alt="Card image cap">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-8">

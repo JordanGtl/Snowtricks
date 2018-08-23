@@ -6,9 +6,10 @@
 parameters:
     locale: "en"
     siteurl: 'http://ocp6'
+    default_picture_trick: '../public/images/figures'
     upload_directory_trick: '../public/uploads/medias'
     upload_directory_avatar: '../public/uploads/avatars'
-    comment_per_page: 2
+    comment_per_page: 6
     trick_index_nbr: 6
 
 services:

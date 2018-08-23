@@ -18,7 +18,7 @@ class MemberFixtures extends BaseFixtures
 
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Member::class, 10, function(Member $member, $count)
+        $this->createMany(Member::class, 10, function(Member $member, $count, $manager)
         {
             $member->setUsername('member'.$count);
             $member->setPlainPassword('member'.$count);

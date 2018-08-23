@@ -14,6 +14,8 @@
                 <a href="#"><img class="card-img-top" src="/images/trick.jpg" alt="Card image cap"></a>
                 <div class="card-body p-2">
                     <div class="row">
+
+                        {% if is_granted('ROLE_USER') %}
                         <div class="col-8 ">
                             <h5 class="card-title p-2"><a href="{{ path('app_trick', {'slug' : figure.name}) }}" class="FigureLoadName">{{ figure.name }}</a></h5>
                         </div>
@@ -23,6 +25,11 @@
                                 <a class="LinkDelTrick" href="{{ path('app_trick_trash', {'slug' : figure.name}) }}"><i class="fa fa-trash"></i></a>
                             {% endif %}
                         </div>
+                            {% else %}
+                                <div class="col-12 ">
+                                    <h5 class="card-title p-2"><a href="{{ path('app_trick', {'slug' : figure.name}) }}" class="FigureLoadName">{{ figure.name }}</a></h5>
+                                </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

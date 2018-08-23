@@ -20,7 +20,7 @@ abstract class BaseFixtures extends Fixture
     {
         for ($i = 0; $i < $count; $i++) {
             $entity = new $className();
-            $factory($entity, $i);
+            $factory($entity, $i, $this->manager);
             $this->manager->persist($entity);
             // store for usage later as App\Entity\ClassName_#COUNT#
             $this->addReference($className . '_' . $i, $entity);

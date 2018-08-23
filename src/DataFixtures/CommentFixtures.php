@@ -12,7 +12,7 @@ class CommentFixtures extends BaseFixtures implements DependentFixtureInterface
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Comment::class, 30, function(Comment $comment, $count)
+        $this->createMany(Comment::class, 30, function(Comment $comment, $count, $manager)
         {
             $faker = Faker\Factory::create('fr_FR');
 
