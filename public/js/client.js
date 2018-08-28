@@ -19,7 +19,7 @@ $( ".LoadMoreComment" ).click(function(e) {
             if(data.length == 0)
             {
                 $('.ModalAlertTitle').text('Commentaires');
-                $('.ModalAlertContent').text('Tout les commentaires ont été chargés, il n\'y a plus de nouveau commentaire');
+                $('.ModalAlertContent').text('Tous les commentaires ont été chargés, il n\'y a plus de nouveau commentaire');
                 $("#myModalAlert").modal();
             }
             else
@@ -56,7 +56,7 @@ $( ".LoadMoreFigure" ).click(function(e) {
 
         if(data.length == 0) {
             $('.ModalAlertTitle').text('Chargement des figures');
-            $('.ModalAlertContent').text('Les dernieres figures ont déjà été chargées');
+            $('.ModalAlertContent').text('Les dernières figures ont déjà été chargées');
             $("#myModalAlert").modal();
         }
         else
@@ -129,7 +129,7 @@ $('.TrickSetMasterPic').click(function(){
         .done(function( data )
         {
             if(data.result == false)
-                alert('Erreur lors du choix de la photo de couverture');
+                alert('Erreur lors du choix de la photo de couverture.');
             else {
                 document.location.href = '/Trick/' + trickname + '/edit';
             }

@@ -50,7 +50,7 @@ class MemberController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('notice', 'Un email à été envoyé à l\'adresse "'.$user->getEmail().'". Veuillez cliquez sur le lien contenu dans ce mail pour compléter votre inscription et activer votre compte');
+            $this->addFlash('notice', 'Un email à été envoyé à l\'adresse "'.$user->getEmail().'". Veuillez cliquer sur le lien contenu dans ce mail pour compléter votre inscription et activer votre compte');
 
             return $this->redirectToRoute('app_login');
         }
@@ -138,7 +138,7 @@ class MemberController extends AbstractController
                 $user->setPasswordtoken(md5(uniqid()));
                 $em->flush();
 
-                $mail->send($user->getEmail(), 'Snowtrick - Récupération du mot de passe', 'mail/password.html.twig', array('username' => $user->getUsername(), 'link' => $this->getParameter('siteurl').'/PasswordChange/'.$user->getPasswordtoken()));
+                $mail->send($user->getEmail(), 'Snowtricks - Récupération du mot de passe', 'mail/password.html.twig', array('username' => $user->getUsername(), 'link' => $this->getParameter('siteurl').'/PasswordChange/'.$user->getPasswordtoken()));
             }
         }
 
@@ -177,7 +177,7 @@ class MemberController extends AbstractController
 
                 $form = null;
                 $status = true;
-                $message = 'Modification éffectué, vous pouvez vous connecter avec le nouveau mot de passe.';
+                $message = 'Modification éffectuée, vous pouvez vous connecter avec le nouveau mot de passe.';
             }
         }
 
@@ -223,7 +223,7 @@ class MemberController extends AbstractController
 
             $em->flush();
 
-            $this->addFlash('notice','Vos information ont été mises à jour avec succès');
+            $this->addFlash('notice','Vos informations ont été mises à jour avec succès');
         }
 
         return $this->render('member/myaccount.html.twig', ['form' => $form->createView()]);

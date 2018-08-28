@@ -81,7 +81,7 @@ class TrickMediaController extends AbstractController
 
             $em->persist($trickmedia);
             $em->flush();
-            $this->addFlash('notice','Le nouveau média à été ajoutée');
+            $this->addFlash('notice','Le nouveau média à été ajouté');
 
             if($trick->getName() == $this->getUser()->getUsername())
             {
@@ -118,7 +118,7 @@ class TrickMediaController extends AbstractController
 
         if($trickmedia == null)
         {
-            $this->addFlash('error', 'Le media que vous éssayez d\'éditer n\'existe pas');
+            $this->addFlash('error', 'Le media que vous essayez d\'éditer n\'existe pas');
             return $this->redirectToRoute('app_trick');
         }
 

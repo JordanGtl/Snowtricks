@@ -14,19 +14,19 @@
                     {{ form_start(form) }}
                     <div class="FormGroup">
                         <div>Nom de compte</div>
-                        <small>Ce champ représente votre nom de compte. Le nom de compte ets l'identifiants utilisé pour votre connexion sur notre plateforme uniquement. Vous ne pouvez pas le modifier.</small>
+                        <small>Ce champ représente votre nom de compte qui est l'identifiant utilisé lors de votre connexion sur notre plateforme uniquement. Vous ne pouvez pas le modifier.</small>
                         {{ form_errors(form.username) }}
                         {{ form_widget(form.username) }}
                     </div>
                     <div class="FormGroup">
                         <div>Avatar</div>
-                        <small>Ce champ vous permet de choisir un avatar. Laisser le champ vide si vous ne souhaitez pas modifier votre avatar.</small>
+                        <small>Ce champ vous permet de choisir un avatar. Laisser le vide si vous ne souhaitez pas modifier votre avatar.</small>
                         {{ form_errors(form.avatar) }}
                         {{ form_widget(form.avatar) }}
                     </div>
                     <div class="FormGroup">
                         <div>Mot de passe</div>
-                        <small>Ce champ vous permet de modifier votre mot de passe. Si vous souhaitez conserver votre mot de passe actuel, laisser les deux champs vide.</small>
+                        <small>Ce champ vous permet de modifier votre mot de passe. Si vous souhaitez conserver votre mot de passe actuel, laisser les deux champs vides.</small>
                         {{ form_errors(form.plainPassword) }}
                         {{ form_widget(form.plainPassword) }}
                     </div>

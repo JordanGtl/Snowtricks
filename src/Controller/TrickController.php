@@ -40,7 +40,7 @@ class TrickController extends AbstractController
 
         if($trick == null)
         {
-            $this->addFlash('error', 'La figure que vous éssayer d\'atteindre n\'existe pas.');
+            $this->addFlash('error', 'La figure que vous essayez d\'atteindre n\'existe pas.');
             return $this->redirectToRoute('app_tricks');
         }
 

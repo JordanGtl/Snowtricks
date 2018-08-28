@@ -17,7 +17,7 @@ class Upload
         if($file != null) {
             $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
 
-            $file->copy(
+            $file->move(
                 $directory,
                 $fileName
             );

@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: "en"
-    siteurl: 'http://ocp6'
+    siteurl: 'http://ocp6.gtl-studio.com'
     default_picture_trick: '../public/images/figures'
     upload_directory_trick: '../public/uploads/medias'
     upload_directory_avatar: '../public/uploads/avatars'
