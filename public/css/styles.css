@@ -1,6 +1,6 @@
 /* All */
 html{height:100%;}
-body{height:100%;font-size:14px;background:#eee;background:url('../images/bg2.jpg');background-size: 100% 100%;background-attachment: fixed;}
+body{height:100%;font-size:14px;background:#eee;background:url('../images/bg2.jpg');background-size: 100% 100%;background-attachment: fixed;display:flex;flex-direction: column;}
 
 /* Navigation */
 .navbar{background-color: #363636 !important;padding:0 20px;}
@@ -10,7 +10,7 @@ body{height:100%;font-size:14px;background:#eee;background:url('../images/bg2.jp
 .logo{background:url('../images/title.png');background-size: 100% 100%;display: block;width: 160px;height: 40px;}
 
 /* Header */
-.HeaderImg{height: 100%;width: 100%;margin-top: -50px;background:url('../images/bg.jpg') no-repeat;background-size:100% 100%;background-position:bottom;display:flex;align-items: center;justify-content: center;}
+.HeaderImg{min-height: 100%;width: 100%;margin-top: -50px;background:url('../images/bg.jpg') no-repeat;background-size:100% 100%;background-position:bottom;display:flex;align-items: center;justify-content: center;}
 .HeaderImg > div{color: #fff;font-size: 70px;text-shadow:1px 1px 2px black;font-family: Arial;}
 .logo{background:url('../images/title.png');background-size: 100% 100%;display: block;width: 160px;height: 40px;}
 .DownArrow{position: absolute;bottom: 0;right: 20px;}
@@ -25,7 +25,7 @@ footer{background:#2b2b2b;color:#fff;padding:20px;}
 /* Content */
 .FiguresList{max-width: 100%;margin: 0;background: #272727;}
 .card{border-radius: 0; border: 0;}
-.container{max-width:80%;}
+.container{max-width:80%;flex:1;}
 .block{background:#fff;}
 .bb{border-bottom:solid 1px #ccc;}
 .bt{border-top:solid 1px #ccc;}
@@ -55,6 +55,7 @@ hr:after{content: "OU";display: inline-block;    position: relative;    top: -.8
 .TrickIcon > a {color:#575757;}
 .TrickIcon > a:hover {color: rgba(0, 0, 0);}
 .TrickBottom{border-bottom: solid 1px #aaa;}
+.IndexLoadMore{flex:0;min-height:86px;}
 
 /* Formulaires */
 form{width:100%;}
