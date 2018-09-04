@@ -63,6 +63,7 @@
     },
     "scripts": {
         "auto-scripts": {
+			"app:initfile": "symfony-cmd",
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
 
