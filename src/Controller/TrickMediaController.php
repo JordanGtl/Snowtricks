@@ -70,38 +70,45 @@ class TrickMediaController extends AbstractController
         $repository = $em->getRepository(Trick::class);
         $trick = $repository->findOneBy(['id' => $slug]);
 
-        $trickmedia = new TrickMedia();
-        $form = $this->createForm(TrickMediaType::class, $trickmedia);
-        $form->handleRequest($request);
+		if($trick != null)
+		{
+			$trickmedia = new TrickMedia();
+			$form = $this->createForm(TrickMediaType::class, $trickmedia);
+			$form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $trickmedia->setLink($upload->Upload($trickmedia->getLink(), $this->getParameter('upload_directory_trick')));
-            $trickmedia->setIdFigure($trick);
+			if ($form->isSubmitted() && $form->isValid())
+			{
+				$trickmedia->setLink($upload->Upload($trickmedia->getLink(), $this->getParameter('upload_directory_trick')));
+				$trickmedia->setIdFigure($trick);
 
-            $em->persist($trickmedia);
-            $em->flush();
-            $this->addFlash('notice','Le nouveau média à été ajouté');
+				$em->persist($trickmedia);
+				$em->flush();
+				$this->addFlash('notice','Le nouveau média à été ajouté');
 
-            if($trick->getName() == $this->getUser()->getUsername())
-            {
-                if($trick->getCoverMedia() == null)
-                {
-                    $trick->setCoverMedia($trickmedia);
-                    $em->flush();
-                }
+				if($trick->getName() == $this->getUser()->getUsername())
+				{
+					if($trick->getCoverMedia() == null)
+					{
+						$trick->setCoverMedia($trickmedia);
+						$em->flush();
+					}
 
-                return $this->redirectToRoute('app_trick_new');
-            }
-            else
-                return $this->redirectToRoute('app_trick', ['slug' => $trick->getName()]);
-        }
+					return $this->redirectToRoute('app_trick_new');
+				}
+				else
+					return $this->redirectToRoute('app_trick', ['slug' => $trick->getName()]);
+			}
 
-        return $this->render('trick/addmedia.html.twig', [
-            'trick' => $trick,
-            'mediaform' => $form->createView(),
-            'editmode' => false,
-            'edit' => false]);
+			return $this->render('trick/addmedia.html.twig', [
+				'trick' => $trick,
+				'mediaform' => $form->createView(),
+				'editmode' => false,
+				'edit' => false]);
+		}
+		else
+		{
+			$this->redirectToRoute('app_tricks');
+		}
     }
 
 
@@ -119,7 +126,7 @@ class TrickMediaController extends AbstractController
         if($trickmedia == null)
         {
             $this->addFlash('error', 'Le media que vous essayez d\'éditer n\'existe pas');
-            return $this->redirectToRoute('app_trick');
+            return $this->redirectToRoute('app_tricks');
         }
 
         $form = $this->createForm(TrickMediaType::class, $trickmedia);

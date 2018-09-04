@@ -80,8 +80,14 @@ class TrickController extends AbstractController
     public function edit($slug, Request $request, EntityManagerInterface $em)
     {
         $repository = $em->getRepository(Trick::class);
-
         $trick = $repository->findOneBy(['name' => $slug]);
+		
+		if($trick == null)
+        {
+            $this->addFlash('error', 'La figure que vous souhaitez éditer n\'existe pas.');
+            return $this->redirectToRoute('app_tricks');
+        }
+		
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -225,14 +231,21 @@ class TrickController extends AbstractController
         $repositorycom = $em->getRepository(Comment::class);
 
         $trick = $repository->findOneBy(['id' => $slug]);
-        $comments = $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), $this->getParameter('comment_per_page'), $index);
-
+        
         $results = array();
 
-        foreach($comments as $comment)
-        {
-            $results[] = array('id' => $comment->getId(), 'author' => $comment->getAuthorid()->getUsername(), 'content' => $comment->getContent(), 'date' => $comment->getUpdatedate()->format('d/m/Y h:i'));
-        }
+		if($trick != null)
+		{
+			$comments = $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), $this->getParameter('comment_per_page'), $index);
+
+			
+			foreach($comments as $comment)
+			{
+				$results[] = array('id' => $comment->getId(), 'author' => $comment->getAuthorid()->getUsername(), 'content' => $comment->getContent(), 'date' => $comment->getUpdatedate()->format('d/m/Y h:i'));
+			}
+		}
+		else
+			$results['error'] = 'La figure n\'existe pas.';
 
         return $this->json($results);
     }

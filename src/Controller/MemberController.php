@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class MemberController extends AbstractController
 {
@@ -190,6 +191,7 @@ class MemberController extends AbstractController
 
     /**
      * @Route("/MyAccount", name="app_myaccount")
+	 * @Security("has_role('ROLE_USER')")
      */
     public function myaccount(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Upload $upload)
     {
