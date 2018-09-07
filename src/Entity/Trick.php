@@ -79,6 +79,7 @@ class Trick
     {
         $this->comments = new ArrayCollection();
         $this->trickMedia = new ArrayCollection();
+        $this->active = false;
     }
 
     public function getId()

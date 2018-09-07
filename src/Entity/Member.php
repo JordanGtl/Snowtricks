@@ -90,6 +90,7 @@ class Member implements AdvancedUserInterface
 
         $this->Rank = array('ROLE_USER');
         $this->saveAvatar = $this->getAvatar();
+        $this->active = false;
     }
 
     public function getId()
@@ -229,7 +230,7 @@ class Member implements AdvancedUserInterface
         return $this;
     }
 
-    public function getRank(): ?int
+    public function getRank()
     {
         return $this->Rank;
     }
