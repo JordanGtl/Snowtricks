@@ -236,9 +236,8 @@ class TrickController extends AbstractController
 
 		if($trick != null)
 		{
-			$comments = $repositorycom->findBy(['trickid' => $trick->getId()], array('updatedate' => 'DESC'), $this->getParameter('comment_per_page'), $index);
+			$comments = $repositorycom->findWithLimit($trick, $this->getParameter('comment_per_page'), $index);
 
-			
 			foreach($comments as $comment)
 			{
 				$results[] = array('id' => $comment->getId(), 'author' => $comment->getAuthorid()->getUsername(), 'content' => $comment->getContent(), 'date' => $comment->getUpdatedate()->format('d/m/Y h:i'));

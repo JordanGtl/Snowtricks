@@ -13,6 +13,11 @@
         <env name="APP_ENV" value="test" />
         <env name="APP_DEBUG" value="1" />
         <env name="APP_SECRET" value="d82a9263baa81f0289084eeb528de165" />
+        <env name="APP_MAIL_HOST" value="localhost" />
+        <env name="APP_MAIL_PORT" value="25" />
+        <env name="APP_MAIL_USERNAME" value="username" />
+        <env name="APP_MAIL_PASSWORD" value="password" />
+        <env name="APP_MAIL_TO" value="adresstest@example.com" />
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/ocp6" />
         <!-- define your env variables for the test env here -->
@@ -22,6 +27,9 @@
         <testsuite name="Project Test Suite">
             <directory>tests/Entity</directory>
             <directory>tests/Form</directory>
+            <directory>tests/Service</directory>
+            <directory>tests/Repository</directory>
+            <directory>tests/Command</directory>
         </testsuite>
     </testsuites>
 
@@ -30,6 +38,9 @@
             <directory>./src/</directory>
             <exclude>
                 <directory>./src/Migrations/</directory>
+                <directory>./src/Security/</directory>
+                <directory>./src/Controller/</directory>
+                <directory>./src/DataFixtures/</directory>
                 <directory>./src/Kernel.php</directory>
             </exclude>
         </whitelist>

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -23,18 +24,19 @@ class CommentRepository extends ServiceEntityRepository
 //     * @return Comment[] Returns an array of Comment objects
 //     */
 
-    public function findByExampleField($value)
+    public function findWithLimit(Trick $trick, $limit, $offset)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
+            ->andWhere('c.trickid = :trick')
+            ->setParameter('trick', $trick->getId())
+            ->orderBy('c.updatedate', 'DESC')
             ->setMaxResults(10)
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
             ->getQuery()
             ->getResult()
         ;
     }
-
 
     /*
     public function findOneBySomeField($value): ?Comment

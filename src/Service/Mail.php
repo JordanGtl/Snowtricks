@@ -27,6 +27,7 @@ class Mail
             )
         ;
 
+
         if($this->mailer->send($mail))
             return true;
         else

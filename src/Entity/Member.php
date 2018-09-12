@@ -15,7 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity(fields="email", message="L'adresse email est déjà utilisée")
  * @UniqueEntity(fields="username", message="Le nom de compte est déjà utilisé")
  */
-class Member implements AdvancedUserInterface
+class Member implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id()

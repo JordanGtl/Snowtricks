@@ -6,6 +6,7 @@
 /public/uploads/
 /var/
 /vendor/
+/cover/
 ###< symfony/framework-bundle ###
 
 ###> symfony/web-server-bundle ###
@@ -16,3 +17,7 @@
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
